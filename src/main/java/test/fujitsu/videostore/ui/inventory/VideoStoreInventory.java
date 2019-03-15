@@ -48,6 +48,8 @@ public class VideoStoreInventory extends HorizontalLayout
 
         form = new MovieForm(viewLogic);
 
+
+
         VerticalLayout barAndGridLayout = new VerticalLayout();
         barAndGridLayout.add(topLayout);
         barAndGridLayout.add(grid);
