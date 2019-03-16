@@ -19,7 +19,7 @@ public class AboutView extends HorizontalLayout {
         add(VaadinIcon.INFO_CIRCLE.create());
 
         // TODO: Replace "Your name here" text to your name
-        Label fujitsuLabel = new Label("SK");
+        Label fujitsuLabel = new Label("Igor");
         fujitsuLabel.setId("about-container-name");
 
         add(new Label("This task was done by: "), fujitsuLabel);

@@ -20,7 +20,8 @@ import java.util.List;
  * TODO: Should be re-implemented with your file database. Current implementation is just demo for UI testing.
  */
 public class DatabaseFactory {
-
+    private static int movieMaxID = 0;
+    private static int customerMaxID = 0;
 
     /**
      * Creates database "connection"/opens database from path.
@@ -29,7 +30,7 @@ public class DatabaseFactory {
      * Two example files, /db-examples/database.json and /db-examples/database.yaml.
      * Hint: MovieType.databaseId == type field in database files.
      * <p>
-     * TODO: Current way of creating next ID is incorrect, make better implementation.
+     *
      *
      * @param filePath file path to database
      * @return database proxy for different tables
@@ -43,22 +44,22 @@ public class DatabaseFactory {
                 final List<Movie> movieList = new ArrayList<>();
 
                 JSONParser parser = new JSONParser();
-                /*
-
-                  TODO: Replace fileName path.
-                 */
                 try {
                     Object obj = parser.parse(new FileReader("db-examples/database.json"));
                     JSONObject jsonObject = (JSONObject) obj;
                     JSONArray array = (JSONArray) jsonObject.get("movie");
-                    for (Object json : array) {
 
+                    for (Object json : array) {
                         JSONObject jMovie = (JSONObject) json;
                         Movie movie = new Movie();
                         movie.setId(Integer.parseInt(String.valueOf(jMovie.get("id"))));
                         movie.setName(jMovie.get("name").toString());
                         movie.setStockCount(Integer.parseInt(String.valueOf(jMovie.get("stockCount"))));
                         movieList.add(movie);
+
+                        if (Integer.parseInt(String.valueOf(jMovie.get("id"))) > movieMaxID){
+                            movieMaxID = Integer.parseInt(String.valueOf(jMovie.get("id")));
+                        }
                     }
                 } catch (IOException | ParseException e) {
                     e.printStackTrace();
@@ -104,7 +105,7 @@ public class DatabaseFactory {
 
                     @Override
                     public int generateNextId() {
-                        return movieList.size() + 1;
+                        return movieMaxID + 1;
                     }
                 };
             }
@@ -113,13 +114,26 @@ public class DatabaseFactory {
             public DBTableRepository<Customer> getCustomerTable() {
                 final List<Customer> customerList = new ArrayList<>();
 
-                for (int i = 1; i <= 10; i++) {
-                    Customer customer = new Customer();
-                    customer.setId(i);
-                    customer.setName("Customer " + i);
-                    customer.setPoints(i * 10);
+                JSONParser parser = new JSONParser();
+                try {
+                    Object obj = parser.parse(new FileReader("db-examples/database.json"));
+                    JSONObject jsonObject = (JSONObject) obj;
+                    JSONArray array = (JSONArray) jsonObject.get("customer");
 
-                    customerList.add(customer);
+                    for (Object json : array) {
+                        JSONObject jCustomer = (JSONObject) json;
+                        Customer customer = new Customer();
+                        customer.setId(Integer.parseInt(String.valueOf(jCustomer.get("id"))));
+                        customer.setName(jCustomer.get("name").toString());
+                        customer.setPoints(Integer.parseInt(String.valueOf(jCustomer.get("points"))));
+                        customerList.add(customer);
+
+                        if (Integer.parseInt(String.valueOf(jCustomer.get("id"))) > customerMaxID){
+                            customerMaxID = Integer.parseInt(String.valueOf(jCustomer.get("id")));
+                        }
+                    }
+                } catch (IOException | ParseException e) {
+                    e.printStackTrace();
                 }
 
                 return new DBTableRepository<Customer>() {
@@ -160,7 +174,7 @@ public class DatabaseFactory {
 
                     @Override
                     public int generateNextId() {
-                        return customerList.size() + 1;
+                        return customerMaxID + 1;
                     }
                 };
             }
