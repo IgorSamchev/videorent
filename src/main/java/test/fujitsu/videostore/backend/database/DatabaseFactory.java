@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Database Factory.
  * <p>
- * TODO: Should be re-implemented with your file database. Current implementation is just demo for UI testing.
+ *
  */
 public class DatabaseFactory {
     private static int movieMaxID = 0;
@@ -30,7 +30,6 @@ public class DatabaseFactory {
      * Two example files, /db-examples/database.json and /db-examples/database.yaml.
      * Hint: MovieType.databaseId == type field in database files.
      * <p>
-     *
      *
      * @param filePath file path to database
      * @return database proxy for different tables
@@ -57,7 +56,7 @@ public class DatabaseFactory {
                         movie.setStockCount(Integer.parseInt(String.valueOf(jMovie.get("stockCount"))));
                         movieList.add(movie);
 
-                        if (Integer.parseInt(String.valueOf(jMovie.get("id"))) > movieMaxID){
+                        if (Integer.parseInt(String.valueOf(jMovie.get("id"))) > movieMaxID) {
                             movieMaxID = Integer.parseInt(String.valueOf(jMovie.get("id")));
                         }
                     }
@@ -128,7 +127,7 @@ public class DatabaseFactory {
                         customer.setPoints(Integer.parseInt(String.valueOf(jCustomer.get("points"))));
                         customerList.add(customer);
 
-                        if (Integer.parseInt(String.valueOf(jCustomer.get("id"))) > customerMaxID){
+                        if (Integer.parseInt(String.valueOf(jCustomer.get("id"))) > customerMaxID) {
                             customerMaxID = Integer.parseInt(String.valueOf(jCustomer.get("id")));
                         }
                     }
@@ -183,26 +182,45 @@ public class DatabaseFactory {
             public DBTableRepository<RentOrder> getOrderTable() {
                 final List<RentOrder> orderList = new ArrayList<>();
 
-                for (int i = 1; i <= 10; i++) {
-                    RentOrder order = new RentOrder();
-                    order.setId(i);
-                    order.setCustomer(getCustomerTable().findById(i));
+                JSONParser parser = new JSONParser();
+                try {
+                    Object obj = parser.parse(new FileReader("db-examples/database.json"));
+                    JSONObject jsonObject = (JSONObject) obj;
+                    JSONArray array = (JSONArray) jsonObject.get("order");
 
-                    List<RentOrder.Item> orderItems = new ArrayList<>();
+                    for (Object json : array) {
+                        JSONObject jRentOrder = (JSONObject) json;
+                        RentOrder order = new RentOrder();
+                        order.setId(Integer.parseInt(String.valueOf(jRentOrder.get("id"))));
+                        order.setCustomer(getCustomerTable()
+                                .findById(Integer.parseInt(String.valueOf(jRentOrder.get("customer")))));
 
-                    for (int a = 1; a <= 10; a++) {
-                        RentOrder.Item item = new RentOrder.Item();
-                        item.setMovie(getMovieTable().findById(a));
-                        item.setMovieType(MovieType.REGULAR);
-                        item.setPaidByBonus(a % 2 == 0);
-                        item.setDays(11 - a);
+                        List<RentOrder.Item> orderItems = new ArrayList<>();
+                        JSONArray items = (JSONArray) jRentOrder.get("items");
+                        for (Object object : items) {
+                            JSONObject jItem = (JSONObject) object;
+                            RentOrder.Item item = new RentOrder.Item();
+                            item.setMovie(getMovieTable().findById(Integer.parseInt(String.valueOf(jItem.get("movie")))));
+                            int type = Integer.parseInt(String.valueOf(jItem.get("type")));
 
-                        orderItems.add(item);
+                            if (type == 1) item.setMovieType(MovieType.NEW);
+                            else if (type == 2) item.setMovieType(MovieType.REGULAR);
+                            else if (type == 3) item.setMovieType(MovieType.OLD);
+
+                            item.setPaidByBonus((Boolean) jItem.get("paidByBonus"));
+                            item.setDays(Integer.parseInt(String.valueOf(jItem.get("days"))));
+
+                            orderItems.add(item);
+                        }
+                        order.setItems(orderItems);
+                        orderList.add(order);
                     }
 
-                    order.setItems(orderItems);
-                    orderList.add(order);
+
+                } catch (IOException | ParseException e) {
+                    e.printStackTrace();
                 }
+
 
                 return new DBTableRepository<RentOrder>() {
                     @Override
