@@ -4,7 +4,7 @@ For running project latest JDK 1.8 or newer and maven is required.
 If maven is not installed, then you can use Maven Wrapper (mvnw) in same folder. 
 Just replace `mvn` to `./mvnw` or `./mvnw.bat` in all examples. 
 
-Running application: `mvn jetty:run`
+Running application: mvnw jetty:run
 
 For building application: `mvn clean package`
 

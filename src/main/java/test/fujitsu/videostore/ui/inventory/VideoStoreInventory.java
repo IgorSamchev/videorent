@@ -70,7 +70,7 @@ public class VideoStoreInventory extends HorizontalLayout
         filter.setPlaceholder("Filter by name");
         filter.setValueChangeMode(ValueChangeMode.EAGER);
         filter.addValueChangeListener(event -> {
-            if (filter != null || !filter.getValue().equals("Filter by name")){
+            if (filter != null){
                 List<Movie> movieList = viewLogic.movieDBTableRepository.getAll();
                 List<Movie> temp = new ArrayList<>();
                 for (Movie m : movieList){

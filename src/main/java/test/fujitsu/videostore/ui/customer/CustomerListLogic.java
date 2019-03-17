@@ -9,7 +9,7 @@ public class CustomerListLogic {
 
     private CustomerList view;
 
-    private DBTableRepository<Customer> customerDBTableRepository;
+    public DBTableRepository<Customer> customerDBTableRepository;
 
     public CustomerListLogic(CustomerList customerList) {
         view = customerList;

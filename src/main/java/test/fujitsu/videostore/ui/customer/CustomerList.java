@@ -66,6 +66,17 @@ public class CustomerList extends HorizontalLayout implements HasUrlParameter<St
         filter.setValueChangeMode(ValueChangeMode.EAGER);
         filter.addValueChangeListener(event -> {
             // TODO: Implement filtering by customer name
+            if (filter != null) {
+                List<Customer> customerList = viewLogic.customerDBTableRepository.getAll();
+                List<Customer> temp = new ArrayList<>();
+                for (Customer c : customerList) {
+                    if (c.getName().toLowerCase().contains(filter.getValue().toLowerCase())){
+                        temp.add(c);
+                    }
+                }
+                setCustomers(temp);
+
+            }
         });
 
         newCustomer = new Button("New Customer");
