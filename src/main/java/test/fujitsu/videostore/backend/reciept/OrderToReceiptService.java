@@ -38,11 +38,6 @@ public class OrderToReceiptService {
             item.setMovieName(orderItem.getMovie().getName());
             item.setMovieType(orderItem.getMovieType());
 
-            // TODO: Add calculated data
-
-            //  RentOrder.Item::getMovieType,
-            //  PrintableOrderReceipt.Item::getDays,
-            //  PrintableOrderReceipt.Item::getDays::isPaidByBonus
             if (orderItem.isPaidByBonus()) {
                 double bonusPay = OrderCalculator.calculateOrder(item);
                 item.setPaidBonus((int) bonusPay);
