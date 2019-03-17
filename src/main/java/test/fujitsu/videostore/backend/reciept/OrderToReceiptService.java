@@ -1,5 +1,6 @@
 package test.fujitsu.videostore.backend.reciept;
 
+import test.fujitsu.videostore.backend.domain.Customer;
 import test.fujitsu.videostore.backend.domain.RentOrder;
 import test.fujitsu.videostore.backend.domain.ReturnOrder;
 
@@ -22,6 +23,7 @@ public class OrderToReceiptService {
      */
     public PrintableOrderReceipt convertRentOrderToReceipt(RentOrder order) {
         PrintableOrderReceipt printableOrderReceipt = new PrintableOrderReceipt();
+        int bonusRemaining = order.getCustomer().getPoints();
 
         printableOrderReceipt.setOrderId(order.isNewObject() ? "new" : Integer.toString(order.getId()));
         printableOrderReceipt.setOrderDate(order.getOrderDate());
@@ -37,23 +39,26 @@ public class OrderToReceiptService {
             item.setMovieType(orderItem.getMovieType());
 
             // TODO: Add calculated data
+
             //  RentOrder.Item::getMovieType,
             //  PrintableOrderReceipt.Item::getDays,
             //  PrintableOrderReceipt.Item::getDays::isPaidByBonus
             if (orderItem.isPaidByBonus()) {
-                item.setPaidBonus(1);
+                double bonusPay = OrderCalculator.calculateOrder(item);
+                item.setPaidBonus((int) bonusPay);
+                bonusRemaining = (int) (bonusRemaining - bonusPay);
             } else {
-                item.setPaidMoney(BigDecimal.ONE);
+                double orderPrice = OrderCalculator.calculateOrder(item);
+                item.setPaidMoney(BigDecimal.valueOf(orderPrice));
             }
 
             itemList.add(item);
         }
 
-        // TODO: Set here calculated total price of renting order
-        printableOrderReceipt.setTotalPrice(BigDecimal.ONE);
+        BigDecimal totalPrice = OrderCalculator.calculateTotalPrice(printableOrderReceipt, order);
+        printableOrderReceipt.setTotalPrice(totalPrice);
 
-        // TODO: Set how many bonus points remaining for customer
-        printableOrderReceipt.setRemainingBonusPoints(0);
+        printableOrderReceipt.setRemainingBonusPoints(bonusRemaining);
 
         return printableOrderReceipt;
     }

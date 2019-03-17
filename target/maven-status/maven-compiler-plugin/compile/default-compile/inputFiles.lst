@@ -6,6 +6,7 @@ D:\System\Desktop\fujitsu-video-store-test-v1.3\videorent\src\main\java\test\fuj
 D:\System\Desktop\fujitsu-video-store-test-v1.3\videorent\src\main\java\test\fujitsu\videostore\ui\database\CurrentDatabase.java
 D:\System\Desktop\fujitsu-video-store-test-v1.3\videorent\src\main\java\test\fujitsu\videostore\backend\domain\MovieType.java
 D:\System\Desktop\fujitsu-video-store-test-v1.3\videorent\src\main\java\test\fujitsu\videostore\ui\about\AboutView.java
+D:\System\Desktop\fujitsu-video-store-test-v1.3\videorent\src\main\java\test\fujitsu\videostore\backend\reciept\OrderCalculator.java
 D:\System\Desktop\fujitsu-video-store-test-v1.3\videorent\src\main\java\test\fujitsu\videostore\ui\inventory\VideoStoreInventory.java
 D:\System\Desktop\fujitsu-video-store-test-v1.3\videorent\src\main\java\test\fujitsu\videostore\backend\database\DatabaseFactory.java
 D:\System\Desktop\fujitsu-video-store-test-v1.3\videorent\src\main\java\test\fujitsu\videostore\backend\domain\ReturnOrder.java

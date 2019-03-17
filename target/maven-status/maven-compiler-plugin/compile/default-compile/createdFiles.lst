@@ -1,3 +1,4 @@
+test\fujitsu\videostore\backend\reciept\OrderCalculator.class
 test\fujitsu\videostore\backend\domain\Customer.class
 test\fujitsu\videostore\ui\inventory\components\MovieGrid.class
 test\fujitsu\videostore\ui\inventory\VideoStoreInventoryLogic.class
@@ -19,6 +20,7 @@ test\fujitsu\videostore\ui\MovieStoreInitListener.class
 test\fujitsu\videostore\ui\order\components\ReturnMovieWindow.class
 test\fujitsu\videostore\backend\domain\ReturnOrder.class
 test\fujitsu\videostore\backend\database\DatabaseFactory$1$3.class
+test\fujitsu\videostore\backend\reciept\OrderCalculator$1.class
 test\fujitsu\videostore\ui\order\OrderList.class
 test\fujitsu\videostore\ui\order\OrderListLogic.class
 test\fujitsu\videostore\backend\reciept\PrintableOrderReceipt$Item.class
