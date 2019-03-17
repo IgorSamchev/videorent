@@ -3,7 +3,10 @@ package test.fujitsu.videostore.ui.order.components;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.data.renderer.LocalDateRenderer;
 import com.vaadin.flow.data.renderer.TemplateRenderer;
+import test.fujitsu.videostore.backend.domain.Customer;
 import test.fujitsu.videostore.backend.domain.RentOrder;
+
+import java.util.List;
 
 public class OrderGrid extends Grid<RentOrder> {
 
@@ -29,6 +32,11 @@ public class OrderGrid extends Grid<RentOrder> {
         addColumn(TemplateRenderer.<RentOrder>of(availabilityTemplate)
                 .withProperty("statusClass", order -> {
                     // TODO: Implement flagging system using rules below:
+//                    int problems = 0;
+//                    for (RentOrder.Item orderItem : order.getItems()){
+//                        if (orderItem.getDays() <=)
+//                    }
+
                     // Return "Ok" if there is no any overdue, if all movies are returned
                     // Return "Horrible" if all movies were not returned in time
                     // Return "SoSo" if ablest one movie was not returned in time

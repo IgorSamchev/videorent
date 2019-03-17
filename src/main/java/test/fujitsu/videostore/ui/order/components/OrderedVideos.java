@@ -24,6 +24,7 @@ import test.fujitsu.videostore.ui.database.CurrentDatabase;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class OrderedVideos extends VerticalLayout implements HasValue<AbstractField.ComponentValueChangeEvent<OrderedVideos, List<RentOrder.Item>>, List<RentOrder.Item>> {
 
@@ -63,7 +64,7 @@ public class OrderedVideos extends VerticalLayout implements HasValue<AbstractFi
         addFormBinder.forField(numberOfDays)
                 .asRequired()
                 .withConverter(new StringToIntegerConverter("Invalid number of days"))
-                // TODO: Validation here. Number of days should be more than zero.
+                .withValidator(value -> Integer.parseInt(numberOfDays.getValue()) > 0, "Please select a value greater than 0")
                 .bind("days");
 
         add(numberOfDays);
