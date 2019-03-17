@@ -9,7 +9,7 @@ import test.fujitsu.videostore.ui.database.CurrentDatabase;
 public class OrderListLogic {
 
     private OrderList view;
-    private DBTableRepository<RentOrder> repository;
+    public DBTableRepository<RentOrder> repository;
     private OrderToReceiptService orderToReceiptService;
 
     public OrderListLogic(OrderList orderList) {

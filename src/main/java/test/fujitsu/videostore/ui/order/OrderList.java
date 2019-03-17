@@ -13,8 +13,10 @@ import com.vaadin.flow.router.BeforeEvent;
 import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.router.OptionalParameter;
 import com.vaadin.flow.router.Route;
+import test.fujitsu.videostore.backend.domain.Customer;
 import test.fujitsu.videostore.backend.domain.RentOrder;
 import test.fujitsu.videostore.ui.MainLayout;
+import test.fujitsu.videostore.ui.customer.CustomerList;
 import test.fujitsu.videostore.ui.order.components.OrderForm;
 import test.fujitsu.videostore.ui.order.components.OrderGrid;
 
@@ -67,7 +69,16 @@ public class OrderList extends HorizontalLayout implements HasUrlParameter<Strin
         filter.setPlaceholder("Filter by ID or Customer name");
         filter.setValueChangeMode(ValueChangeMode.EAGER);
         filter.addValueChangeListener(event -> {
-            //TODO: Implement filtering by id and customer name
+            if (filter != null) {
+                List<RentOrder> rentOrderList = viewLogic.repository.getAll();
+                List<RentOrder> temp = new ArrayList<>();
+                for (RentOrder r : rentOrderList) {
+                    if (filter.getValue().equals(String.valueOf(r.getId()))
+                            || r.getCustomer().getName().toLowerCase().contains(filter.getValue().toLowerCase()))
+                        temp.add(r);
+                }
+                setOrders(temp);
+            }
         });
 
         newOrder = new Button("New Order");
