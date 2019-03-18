@@ -50,8 +50,12 @@ public class OrderedVideos extends VerticalLayout implements HasValue<AbstractFi
         movieComboBox.setWidth("100%");
         movieComboBox.setRequired(true);
         movieComboBox.setItemLabelGenerator(Movie::getName);
-        // TODO: List only available movies
-        movieComboBox.setItems(CurrentDatabase.get().getMovieTable().getAll());
+
+        List<Movie> availableMovies = new ArrayList<>();
+        for (Movie movie : CurrentDatabase.get().getMovieTable().getAll()){
+            if (movie.getStockCount() > 1) availableMovies.add(movie);
+        }
+        movieComboBox.setItems(availableMovies);
         addFormBinder.forField(movieComboBox)
                 .asRequired()
                 .bind("movie");

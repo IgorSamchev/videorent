@@ -1,6 +1,5 @@
 package test.fujitsu.videostore.backend.reciept;
 
-import test.fujitsu.videostore.backend.domain.Customer;
 import test.fujitsu.videostore.backend.domain.RentOrder;
 import test.fujitsu.videostore.backend.domain.ReturnOrder;
 

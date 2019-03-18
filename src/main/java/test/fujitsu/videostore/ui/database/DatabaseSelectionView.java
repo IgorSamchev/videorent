@@ -4,12 +4,15 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dependency.HtmlImport;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+
+import java.io.File;
 
 @Route("DatabaseSelection")
 @PageTitle("Database Selection")
@@ -54,17 +57,23 @@ public class DatabaseSelectionView extends FlexLayout {
         return verticalLayout;
     }
 
+    private static void showErrorNotification() {
+        Notification notification = new Notification();
+        notification.setDuration(2000);
+        notification.setPosition(Notification.Position.MIDDLE);
+        notification.setText("Wrong DB path");
+        notification.setOpened(true);
+    }
+
     private void selectDatabase() {
-        selectDatabaseButton.setEnabled(false);
-        try {
-            // TODO: Make validations against selected database. If there will be an error, then show notification with
-            // using https://vaadin.com/api/platform/com/vaadin/flow/component/notification/Notification.html
-
+        selectDatabaseButton.setEnabled(true);
+        File file = new File(databasePath.getValue());
+        if (databasePath.getValue().contains(".json") && file.length() > 0) {
             CurrentDatabase.set(databasePath.getValue());
-
-            getUI().get().navigate("");
-        } finally {
-            selectDatabaseButton.setEnabled(true);
+            if (getUI().isPresent()) getUI().get().navigate("");
+        } else {
+            showErrorNotification();
         }
+
     }
 }
