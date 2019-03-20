@@ -1,10 +1,18 @@
 package test.fujitsu.videostore.backend.reciept;
 
+import net.bytebuddy.asm.Advice;
 import test.fujitsu.videostore.backend.domain.MovieType;
 import test.fujitsu.videostore.backend.domain.RentOrder;
+import test.fujitsu.videostore.backend.domain.ReturnOrder;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.temporal.ChronoField;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class OrderCalculator {
 
@@ -40,4 +48,9 @@ public class OrderCalculator {
     }
 
 
+    public static int calculateExtraDays(RentOrder.Item rentedItem, PrintableReturnReceipt receipt, ReturnOrder order) {
+//        Period interval = Period.between(order.getRentOrder().getOrderDate().plusDays(2), LocalDate.now().plusDays(1));
+        int totalDays = (int) ChronoUnit.DAYS.between(order.getRentOrder().getOrderDate(), LocalDate.now());
+        return totalDays - rentedItem.getDays();
+    }
 }

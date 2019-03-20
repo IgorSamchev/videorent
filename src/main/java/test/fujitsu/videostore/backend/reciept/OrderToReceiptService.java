@@ -63,6 +63,7 @@ public class OrderToReceiptService {
      * @param order return object
      * @return Printable receipt object
      */
+
     public PrintableReturnReceipt convertRentOrderToReceipt(ReturnOrder order) {
         PrintableReturnReceipt receipt = new PrintableReturnReceipt();
 
@@ -77,8 +78,10 @@ public class OrderToReceiptService {
                 PrintableReturnReceipt.Item item = new PrintableReturnReceipt.Item();
                 item.setMovieName(rentedItem.getMovie().getName());
                 item.setMovieType(rentedItem.getMovieType());
+
+                int extraDays = OrderCalculator.calculateExtraDays(rentedItem, receipt, order);
                 // TODO: Set calculated data how much later rented movie was returned
-                item.setExtraDays(0);
+                item.setExtraDays(extraDays);
                 // TODO: Set calculated data how much it will cost extra days
                 item.setExtraPrice(BigDecimal.ZERO);
 
