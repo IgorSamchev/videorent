@@ -91,8 +91,6 @@ public class OrderToReceiptService {
         }
         receipt.setReturnedItems(returnedItems);
 
-        // TODO: Set calculated total extra charge for all movies
-
         int totalCharge = OrderCalculator.getTotalCharge(order);
         receipt.setTotalCharge(BigDecimal.valueOf(totalCharge));
 

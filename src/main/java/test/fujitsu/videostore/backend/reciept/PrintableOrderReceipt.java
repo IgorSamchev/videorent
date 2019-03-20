@@ -67,13 +67,24 @@ public class PrintableOrderReceipt implements PrintableReceipt {
         this.remainingBonusPoints = remainingBonusPoints;
     }
 
+
+
     public String print() {
         StringBuilder receipt = new StringBuilder()
                 .append("ID: ").append(getOrderId())
-                .append("\n")
-                .append("Date: ").append(getOrderDate().format(DateTimeFormatter.ofPattern("dd-MM-YY")))
+                .append("\n");
+        if (getOrderDate() != null) {
+            receipt.append(getOrderDate().format(DateTimeFormatter.ofPattern("dd-MM-YY")));
+        } else receipt.append(LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-YY")));
+
+        receipt
                 .append("\n").append("Customer: ").append(getCustomerName())
                 .append("\n");
+
+        if (getOrderDate() != null) {
+            receipt.append(getOrderDate());
+        } else receipt.append(LocalDate.now());
+
 
         boolean paidAnyUsingBonus = false;
 

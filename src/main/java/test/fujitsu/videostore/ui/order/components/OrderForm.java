@@ -148,7 +148,7 @@ public class OrderForm extends Div {
         delete.setEnabled(true);
     }
 
-    private void setSaveButtonCaption(boolean isReadOnly) {
+    public void setSaveButtonCaption(boolean isReadOnly) {
         save.setText(isReadOnly ? "View receipt" : "Review and Print receipt");
     }
 

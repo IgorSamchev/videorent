@@ -22,6 +22,7 @@ import java.util.List;
 public class DatabaseFactory {
     private static int movieMaxID = 0;
     private static int customerMaxID = 0;
+    private static int orderMaxID = 0;
 
     /**
      * Creates database "connection"/opens database from path.
@@ -51,7 +52,9 @@ public class DatabaseFactory {
                     for (Object json : array) {
                         JSONObject jMovie = (JSONObject) json;
                         Movie movie = new Movie();
-                        movie.setId(Integer.parseInt(String.valueOf(jMovie.get("id"))));
+                        int movieID = Integer.parseInt(String.valueOf(jMovie.get("id")));
+                        movie.setId(movieID);
+                        if (movieID > movieMaxID) movieMaxID = movieID;
                         movie.setName(jMovie.get("name").toString());
                         movie.setStockCount(Integer.parseInt(String.valueOf(jMovie.get("stockCount"))));
                         movieList.add(movie);
@@ -104,7 +107,7 @@ public class DatabaseFactory {
 
                     @Override
                     public int generateNextId() {
-                        return movieMaxID + 1;
+                        return ++movieMaxID;
                     }
                 };
             }
@@ -122,7 +125,9 @@ public class DatabaseFactory {
                     for (Object json : array) {
                         JSONObject jCustomer = (JSONObject) json;
                         Customer customer = new Customer();
-                        customer.setId(Integer.parseInt(String.valueOf(jCustomer.get("id"))));
+                        int customerID = Integer.parseInt(String.valueOf(jCustomer.get("id")));
+                        customer.setId(customerID);
+                        if (customerID > customerMaxID) customerMaxID = customerID;
                         customer.setName(jCustomer.get("name").toString());
                         customer.setPoints(Integer.parseInt(String.valueOf(jCustomer.get("points"))));
                         customerList.add(customer);
@@ -173,7 +178,7 @@ public class DatabaseFactory {
 
                     @Override
                     public int generateNextId() {
-                        return customerMaxID + 1;
+                        return ++customerMaxID ;
                     }
                 };
             }
@@ -191,11 +196,13 @@ public class DatabaseFactory {
                     for (Object json : array) {
                         JSONObject jRentOrder = (JSONObject) json;
                         RentOrder order = new RentOrder();
-                        order.setId(Integer.parseInt(String.valueOf(jRentOrder.get("id"))));
+                        int orderID = Integer.parseInt(String.valueOf(jRentOrder.get("id")));
+                        order.setId(orderID);
+                        if (orderID > orderMaxID) orderMaxID = orderID;
                         order.setCustomer(getCustomerTable()
                                 .findById(Integer.parseInt(String.valueOf(jRentOrder.get("customer")))));
-                        String date = String.valueOf(jRentOrder.get("orderDate"));
-                        order.setOrderDate((LocalDate.parse(date)));
+                        LocalDate date = LocalDate.parse(String.valueOf(jRentOrder.get("orderDate")));
+                        order.setOrderDate(date);
 
                         List<RentOrder.Item> orderItems = new ArrayList<>();
                         JSONArray items = (JSONArray) jRentOrder.get("items");
@@ -263,7 +270,7 @@ public class DatabaseFactory {
 
                     @Override
                     public int generateNextId() {
-                        return orderList.size() + 1;
+                        return ++orderMaxID;
                     }
                 };
             }
