@@ -79,11 +79,12 @@ public class OrderToReceiptService {
                 item.setMovieName(rentedItem.getMovie().getName());
                 item.setMovieType(rentedItem.getMovieType());
 
-                int extraDays = OrderCalculator.calculateExtraDays(rentedItem, receipt, order);
-                // TODO: Set calculated data how much later rented movie was returned
+                int extraDays = OrderCalculator.calculateExtraDays(rentedItem, order);
                 item.setExtraDays(extraDays);
-                // TODO: Set calculated data how much it will cost extra days
-                item.setExtraPrice(BigDecimal.ZERO);
+
+                int extraDaysPayForEachMovie = OrderCalculator.calculateExtraDaysPayForEachMovie(rentedItem, order);
+
+                item.setExtraPrice(BigDecimal.valueOf(extraDaysPayForEachMovie));
 
                 returnedItems.add(item);
             }
@@ -91,7 +92,9 @@ public class OrderToReceiptService {
         receipt.setReturnedItems(returnedItems);
 
         // TODO: Set calculated total extra charge for all movies
-        receipt.setTotalCharge(BigDecimal.ZERO);
+
+        int totalCharge = OrderCalculator.getTotalCharge(order);
+        receipt.setTotalCharge(BigDecimal.valueOf(totalCharge));
 
         return receipt;
     }
