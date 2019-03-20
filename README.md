@@ -6,6 +6,8 @@ Just replace `mvn` to `./mvnw` or `./mvnw.bat` in all examples.
 
 Running application: mvnw jetty:run
 
+D:\System\Desktop\fujitsu-video-store-test-v1.3\videorent\db-examples/database.json
+
 For building application: `mvn clean package`
 
 For running tests: `mvn test`

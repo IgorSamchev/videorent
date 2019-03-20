@@ -11,13 +11,13 @@ import test.fujitsu.videostore.backend.domain.RentOrder;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Database Factory.
  * <p>
- *
  */
 public class DatabaseFactory {
     private static int movieMaxID = 0;
@@ -44,7 +44,7 @@ public class DatabaseFactory {
 
                 JSONParser parser = new JSONParser();
                 try {
-                    Object obj = parser.parse(new FileReader("db-examples/database.json"));
+                    Object obj = parser.parse(new FileReader(filePath));
                     JSONObject jsonObject = (JSONObject) obj;
                     JSONArray array = (JSONArray) jsonObject.get("movie");
 
@@ -115,7 +115,7 @@ public class DatabaseFactory {
 
                 JSONParser parser = new JSONParser();
                 try {
-                    Object obj = parser.parse(new FileReader("db-examples/database.json"));
+                    Object obj = parser.parse(new FileReader(filePath));
                     JSONObject jsonObject = (JSONObject) obj;
                     JSONArray array = (JSONArray) jsonObject.get("customer");
 
@@ -184,7 +184,7 @@ public class DatabaseFactory {
 
                 JSONParser parser = new JSONParser();
                 try {
-                    Object obj = parser.parse(new FileReader("db-examples/database.json"));
+                    Object obj = parser.parse(new FileReader(filePath));
                     JSONObject jsonObject = (JSONObject) obj;
                     JSONArray array = (JSONArray) jsonObject.get("order");
 
@@ -194,6 +194,8 @@ public class DatabaseFactory {
                         order.setId(Integer.parseInt(String.valueOf(jRentOrder.get("id"))));
                         order.setCustomer(getCustomerTable()
                                 .findById(Integer.parseInt(String.valueOf(jRentOrder.get("customer")))));
+                        String date = String.valueOf(jRentOrder.get("orderDate"));
+                        order.setOrderDate((LocalDate.parse(date)));
 
                         List<RentOrder.Item> orderItems = new ArrayList<>();
                         JSONArray items = (JSONArray) jRentOrder.get("items");

@@ -21,7 +21,7 @@ public class RentOrder {
     /**
      * Rent date
      */
-    private LocalDate orderDate = LocalDate.now();
+    private LocalDate orderDate;
 
     /**
      * List of rented movies
