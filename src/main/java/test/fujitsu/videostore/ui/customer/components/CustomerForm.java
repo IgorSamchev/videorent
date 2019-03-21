@@ -77,9 +77,6 @@ public class CustomerForm extends Div {
             if (currentCustomer != null && customerNotPresent()) {
                 binder.writeBeanIfValid(currentCustomer);
                 viewLogic.saveCustomer(currentCustomer);
-
-                // TODO: Perform validations here. Need to validate that customer name is filled, bonus points have correct integer representation.
-                // TODO: Validation that customer with same name is not present already in database.
             } else
                 showErrorNotification();
         });

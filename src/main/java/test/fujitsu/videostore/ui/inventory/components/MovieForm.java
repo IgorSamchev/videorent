@@ -4,6 +4,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.textfield.TextFieldVariant;
@@ -90,9 +91,17 @@ public class MovieForm extends Div {
         save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         save.addClickListener(event -> {
             if (currentMovie != null) {
-                // TODO: Validation for movie name, validate that movie type is selected
-                binder.writeBeanIfValid(currentMovie);
-                viewLogic.saveMovie(currentMovie);
+                if (name.getValue().length() > 1) {
+                    if (type.getValue() == MovieType.NEW || type.getValue() == MovieType.REGULAR
+                            || type.getValue() == MovieType.OLD) {
+                        binder.writeBeanIfValid(currentMovie);
+                        viewLogic.saveMovie(currentMovie);
+                    } else {
+                        Notification.show("Select Movie Type", 2000, Notification.Position.MIDDLE);
+                    }
+                } else {
+                    Notification.show("Select Movie name", 2000, Notification.Position.MIDDLE);
+                }
             }
         });
 
