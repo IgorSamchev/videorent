@@ -3,6 +3,7 @@ package test.fujitsu.videostore.ui.customer.components;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
@@ -10,6 +11,8 @@ import com.vaadin.flow.data.converter.StringToIntegerConverter;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import test.fujitsu.videostore.backend.domain.Customer;
 import test.fujitsu.videostore.ui.customer.CustomerListLogic;
+
+import java.util.List;
 
 /**
  * Customer edit/creation form
@@ -53,6 +56,7 @@ public class CustomerForm extends Div {
 
         binder = new Binder<>(Customer.class);
         binder.forField(name)
+                .withValidator(name -> name.length() > 0, "Invalid name")
                 .bind("name");
         binder.forField(points)
                 .withConverter(new StringToIntegerConverter("Invalid bonus points format"))
@@ -70,13 +74,14 @@ public class CustomerForm extends Div {
         save.setWidth("100%");
         save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         save.addClickListener(event -> {
-            if (currentCustomer != null) {
-                // TODO: Perform validations here. Need to validate that customer name is filled, bonus points have correct integer representation.
-                // TODO: Validation that customer with same name is not present already in database.
-
+            if (currentCustomer != null && customerNotPresent()) {
                 binder.writeBeanIfValid(currentCustomer);
                 viewLogic.saveCustomer(currentCustomer);
-            }
+
+                // TODO: Perform validations here. Need to validate that customer name is filled, bonus points have correct integer representation.
+                // TODO: Validation that customer with same name is not present already in database.
+            } else
+                showErrorNotification();
         });
 
         cancel = new Button("Cancel");
@@ -99,6 +104,23 @@ public class CustomerForm extends Div {
 
         content.add(save, delete, cancel);
     }
+
+    private boolean customerNotPresent(){
+        for (Customer customer : viewLogic.customerDBTableRepository.getAll()){
+            if (customer.getName().equals(name.getValue())) return false;
+        }
+         return true;
+    }
+
+    private void showErrorNotification() {
+        Notification notification = new Notification();
+        notification.setDuration(2000);
+        notification.setPosition(Notification.Position.MIDDLE);
+        notification.setText("Current user already exists");
+        notification.setOpened(true);
+    }
+
+
 
     public void editCustomer(Customer customer) {
         if (customer == null) {

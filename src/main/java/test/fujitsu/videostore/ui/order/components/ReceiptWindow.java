@@ -4,6 +4,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.dom.Element;
@@ -39,6 +40,17 @@ public class ReceiptWindow extends Dialog {
         save.setVisible(isNew);
         save.addClickListener(event -> {
             approvalListener.approved();
+
+
+
+
+
+
+
+
+
+
+
             ReceiptWindow.this.close();
         });
 
