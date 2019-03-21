@@ -4,6 +4,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.OrderedList;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -13,6 +14,9 @@ import com.vaadin.flow.data.converter.StringToIntegerConverter;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import test.fujitsu.videostore.backend.domain.Movie;
 import test.fujitsu.videostore.backend.domain.MovieType;
+import test.fujitsu.videostore.backend.domain.RentOrder;
+import test.fujitsu.videostore.ui.MovieStoreInitListener;
+import test.fujitsu.videostore.ui.inventory.VideoStoreInventory;
 import test.fujitsu.videostore.ui.inventory.VideoStoreInventoryLogic;
 
 import java.text.DecimalFormat;
@@ -83,6 +87,9 @@ public class MovieForm extends Div {
             boolean isValid = !event.hasValidationErrors();
             boolean hasChanges = binder.hasChanges();
             save.setEnabled(hasChanges && isValid);
+            delete.setEnabled(!VideoStoreInventory.isNewMovie);
+
+
         });
 
         save = new Button("Save");
@@ -90,6 +97,7 @@ public class MovieForm extends Div {
         save.setWidth("100%");
         save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         save.addClickListener(event -> {
+            VideoStoreInventory.isNewMovie = false;
             if (currentMovie != null) {
                 if (name.getValue().length() > 1) {
                     if (type.getValue() == MovieType.NEW || type.getValue() == MovieType.REGULAR
@@ -108,7 +116,10 @@ public class MovieForm extends Div {
         cancel = new Button("Cancel");
         cancel.setId("cancel");
         cancel.setWidth("100%");
-        cancel.addClickListener(event -> viewLogic.cancelMovie());
+        cancel.addClickListener(event -> {
+            VideoStoreInventory.isNewMovie = false;
+            viewLogic.cancelMovie();
+        });
         getElement()
                 .addEventListener("keydown", event -> viewLogic.cancelMovie())
                 .setFilter("event.key == 'Escape'");
@@ -118,6 +129,7 @@ public class MovieForm extends Div {
         delete.setWidth("100%");
         delete.addThemeVariants(ButtonVariant.LUMO_ERROR, ButtonVariant.LUMO_PRIMARY);
         delete.addClickListener(event -> {
+
             if (currentMovie != null) {
                 viewLogic.deleteMovie(currentMovie);
             }
@@ -137,8 +149,9 @@ public class MovieForm extends Div {
         currentMovie = movie;
         binder.readBean(movie);
 
+        delete.setVisible(true);
         // TODO: Delete movie button should be inactive if it’s new movie creation or it was rented at least one time.
-        delete.setEnabled(true);
+
     }
 
     private static class StockCountConverter extends StringToIntegerConverter {

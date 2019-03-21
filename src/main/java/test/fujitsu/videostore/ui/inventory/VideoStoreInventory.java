@@ -27,6 +27,7 @@ import java.util.List;
 public class VideoStoreInventory extends HorizontalLayout
         implements HasUrlParameter<String> {
 
+    public static boolean isNewMovie = false;
     public static final String VIEW_NAME = "Inventory";
     private MovieGrid grid;
     private MovieForm form;
@@ -82,11 +83,16 @@ public class VideoStoreInventory extends HorizontalLayout
             }
         });
 
+
         newMovie = new Button("New Movie");
         newMovie.setId("new-item");
         newMovie.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         newMovie.setIcon(VaadinIcon.PLUS_CIRCLE.create());
-        newMovie.addClickListener(click -> viewLogic.newMovie());
+        newMovie.addClickListener(click -> {
+            isNewMovie = true;
+            viewLogic.newMovie();
+        });
+
 
         HorizontalLayout topLayout = new HorizontalLayout();
         topLayout.setWidth("100%");

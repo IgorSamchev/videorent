@@ -17,7 +17,6 @@ import test.fujitsu.videostore.ui.database.CurrentDatabase;
 import test.fujitsu.videostore.ui.order.OrderListLogic;
 
 public class OrderForm extends Div {
-
     private VerticalLayout content;
 
     private ComboBox<Customer> customerComboBox;
@@ -87,7 +86,7 @@ public class OrderForm extends Div {
                 return;
             }
 
-            // TODO: Validate that user have enough bonus points
+
 
 
             binder.writeBeanIfValid(currentOrder);
