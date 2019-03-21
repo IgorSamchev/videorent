@@ -4,7 +4,6 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datepicker.DatePicker;
-import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -13,12 +12,9 @@ import com.vaadin.flow.data.binder.BinderValidationStatus;
 import com.vaadin.flow.data.binder.ValidationResult;
 import test.fujitsu.videostore.backend.domain.Customer;
 import test.fujitsu.videostore.backend.domain.RentOrder;
-import test.fujitsu.videostore.backend.reciept.OrderCalculator;
 import test.fujitsu.videostore.backend.reciept.PrintableOrderReceipt;
 import test.fujitsu.videostore.ui.database.CurrentDatabase;
 import test.fujitsu.videostore.ui.order.OrderListLogic;
-
-import java.util.List;
 
 public class OrderForm extends Div {
 
@@ -91,22 +87,13 @@ public class OrderForm extends Div {
                 return;
             }
 
-
-            List<Customer> list = CurrentDatabase.get().getCustomerTable().getAll();
-
-
             // TODO: Validate that user have enough bonus points
-            for (Customer customer : list) {
-                if (customer.getId() == (customerComboBox.getValue().getId())) {
-                  //  if (customer.getPoints() > )
-
-                    binder.writeBeanIfValid(currentOrder);
-                    new ReceiptWindow(viewLogic.getOrderToReceiptService().convertRentOrderToReceipt(currentOrder).print(), currentOrder.isNewObject(), () -> viewLogic.saveOrder(currentOrder));
-
-                }
 
 
-            }
+            binder.writeBeanIfValid(currentOrder);
+            new ReceiptWindow(viewLogic.getOrderToReceiptService().convertRentOrderToReceipt(currentOrder).print(),
+                    currentOrder.isNewObject(), () -> viewLogic.saveOrder(currentOrder));
+
 
         });
 

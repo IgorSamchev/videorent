@@ -27,7 +27,7 @@ public class DatabaseFactory {
     /**
      * Creates database "connection"/opens database from path.
      * <p>
-     *
+     * <p>
      * Two example files, /db-examples/database.json and /db-examples/database.yaml.
      * Hint: MovieType.databaseId == type field in database files.
      * <p>
@@ -58,6 +58,9 @@ public class DatabaseFactory {
                         movie.setName(jMovie.get("name").toString());
                         movie.setStockCount(Integer.parseInt(String.valueOf(jMovie.get("stockCount"))));
                         movieList.add(movie);
+                        if (String.valueOf(jMovie.get("type")).equals("1")) movie.setType(MovieType.NEW);
+                        if (String.valueOf(jMovie.get("type")).equals("2")) movie.setType(MovieType.REGULAR);
+                        if (String.valueOf(jMovie.get("type")).equals("3")) movie.setType(MovieType.OLD);
 
                         if (Integer.parseInt(String.valueOf(jMovie.get("id"))) > movieMaxID) {
                             movieMaxID = Integer.parseInt(String.valueOf(jMovie.get("id")));
@@ -178,7 +181,7 @@ public class DatabaseFactory {
 
                     @Override
                     public int generateNextId() {
-                        return ++customerMaxID ;
+                        return ++customerMaxID;
                     }
                 };
             }

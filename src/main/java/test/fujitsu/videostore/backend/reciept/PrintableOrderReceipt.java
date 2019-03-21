@@ -81,10 +81,6 @@ public class PrintableOrderReceipt implements PrintableReceipt {
                 .append("\n").append("Customer: ").append(getCustomerName())
                 .append("\n");
 
-        if (getOrderDate() != null) {
-            receipt.append(getOrderDate());
-        } else receipt.append(LocalDate.now());
-
 
         boolean paidAnyUsingBonus = false;
 
@@ -100,7 +96,13 @@ public class PrintableOrderReceipt implements PrintableReceipt {
         receipt.append("Total price: ").append(getTotalPrice()).append(" EUR");
 
         if (paidAnyUsingBonus) {
-            receipt.append("\nRemaining Bonus points: ").append(getRemainingBonusPoints());
+            if (getRemainingBonusPoints() < 0) {
+                receipt.append(" \nNeed more bonus points!");
+
+            } else {
+                receipt.append("\nRemaining Bonus points: ").append(getRemainingBonusPoints());
+
+            }
         }
 
         return receipt.toString();

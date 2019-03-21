@@ -38,9 +38,9 @@ public class OrderToReceiptService {
             item.setMovieType(orderItem.getMovieType());
 
             if (orderItem.isPaidByBonus()) {
-                double bonusPay = OrderCalculator.calculateOrder(item);
-                item.setPaidBonus((int) bonusPay);
-                bonusRemaining = (int) (bonusRemaining - bonusPay);
+                int bonusPay = OrderCalculator.calculateOrder(item);
+                item.setPaidBonus( bonusPay);
+                bonusRemaining = (bonusRemaining - bonusPay);
             } else {
                 double orderPrice = OrderCalculator.calculateOrder(item);
                 item.setPaidMoney(BigDecimal.valueOf(orderPrice));

@@ -39,6 +39,9 @@ public class ReceiptWindow extends Dialog {
         save.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
         save.setVisible(isNew);
         save.addClickListener(event -> {
+            if (orderReceipt.contains("Need more bonus points"))
+                Notification.show("Need more bonus points",3000, Notification.Position.MIDDLE);
+            else
             approvalListener.approved();
 
 

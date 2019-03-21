@@ -32,15 +32,18 @@ public class OrderCalculator {
     }
 
 
-    public static double calculateOrder(PrintableOrderReceipt.Item item) {
-        double orderPrice = 0;
+    public static int calculateOrder(PrintableOrderReceipt.Item item) {
+        int orderPrice = 0;
         switch (item.getMovieType()) {
             case NEW:
                 orderPrice = 3 * item.getDays();
+                break;
             case REGULAR:
                 orderPrice = 2 * item.getDays();
+                break;
             case OLD:
-                orderPrice = item.getDays();
+                orderPrice = 1 * item.getDays();
+                break;
         }
         return orderPrice;
     }
@@ -55,12 +58,13 @@ public class OrderCalculator {
         int extraDays = OrderCalculator.calculateExtraDays(rentedItem, order);
         if (rentedItem.getMovieType() == MovieType.NEW) return extraDays * 3;
         if (rentedItem.getMovieType() == MovieType.REGULAR) return extraDays * 2;
-        return extraDays;
+        return  extraDays;
     }
 
     public static int getTotalCharge(ReturnOrder order) {
         int totalCharge = 0;
         if (order.getItems() != null) {
+
             for (RentOrder.Item rentedItem : order.getItems()) {
                 int extraPay = calculateExtraDaysPayForEachMovie(rentedItem, order);
                 totalCharge += extraPay;
