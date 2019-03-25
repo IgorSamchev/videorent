@@ -2,6 +2,7 @@ package test.fujitsu.videostore.ui.order;
 
 import com.vaadin.flow.component.UI;
 import test.fujitsu.videostore.backend.database.DBTableRepository;
+import test.fujitsu.videostore.backend.database.DatabaseFactory;
 import test.fujitsu.videostore.backend.domain.RentOrder;
 import test.fujitsu.videostore.backend.reciept.OrderToReceiptService;
 import test.fujitsu.videostore.ui.database.CurrentDatabase;
@@ -59,6 +60,7 @@ public class OrderListLogic {
     }
 
     private RentOrder findOrder(int orderId) {
+
         return repository.findById(orderId);
     }
 

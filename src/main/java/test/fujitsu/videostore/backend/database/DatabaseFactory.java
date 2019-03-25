@@ -21,6 +21,8 @@ import java.util.*;
 public class DatabaseFactory {
     public static List<Movie> movieList = new ArrayList<>();
     public static List<Customer> customerList = new ArrayList<>();
+    public static List<RentOrder> orderList = new ArrayList<>();
+
     private static int movieMaxID = 0;
     private static int customerMaxID = 0;
     private static int orderMaxID = 0;
@@ -33,6 +35,10 @@ public class DatabaseFactory {
         return customerList;
     }
 
+    public static List<RentOrder> getOrderList() {
+        return orderList;
+    }
+
     public static Movie findMovieById(int id) {
         return movieList.stream().filter(movie -> movie.getId() == id).findFirst().get();
     }
@@ -41,25 +47,10 @@ public class DatabaseFactory {
         return customerList.stream().filter(customer -> customer.getId() == id).findFirst().get();
     }
 
+    public static RentOrder findOrderById(int id) {
+        return orderList.stream().filter(rentOrder -> rentOrder.getId() == id).findFirst().get();
+    }
 
-
-
-
-
-
-
-
-    /**
-     * Creates database "connection"/opens database from path.
-     * <p>
-     * <p>
-     * Two example files, /db-examples/database.json and /db-examples/database.yaml.
-     * Hint: MovieType.databaseId == type field in database files.
-     * <p>
-     *
-     * @param filePath file path to database
-     * @return database proxy for different tables
-     */
     public static Database from(String filePath) {
 
         return new Database() {
@@ -228,7 +219,7 @@ public class DatabaseFactory {
         //TODO fix me
             @Override
             public DBTableRepository<RentOrder> getOrderTable() {
-                final List<RentOrder> orderList = new ArrayList<>();
+
 
                 JSONParser parser = new JSONParser();
                 try {
@@ -242,6 +233,7 @@ public class DatabaseFactory {
                         int orderID = Integer.parseInt(String.valueOf(jRentOrder.get("id")));
                         order.setId(orderID);
                         if (orderID > orderMaxID) orderMaxID = orderID;
+                        getCustomerTable();
                         order.setCustomer(getCustomerList().stream().filter(customer -> customer.getId()
                                 == (Integer.parseInt(String.valueOf(jRentOrder.get("customer"))))).findFirst().get());
                         LocalDate date = LocalDate.parse(String.valueOf(jRentOrder.get("orderDate")));
@@ -266,9 +258,15 @@ public class DatabaseFactory {
                             orderItems.add(item);
                         }
                         order.setItems(orderItems);
-                        orderList.add(order);
-                    }
 
+                        boolean contains = false;
+                        if (!orderList.isEmpty()){
+                            for (RentOrder rentOrder : orderList){
+                                if (rentOrder.getId() == order.getId()) contains = true;
+                            }
+                        }
+                        if (!contains) orderList.add(order);
+                    }
 
                 } catch (IOException | ParseException e) {
                     e.printStackTrace();

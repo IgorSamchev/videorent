@@ -13,6 +13,7 @@ import com.vaadin.flow.router.BeforeEvent;
 import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.router.OptionalParameter;
 import com.vaadin.flow.router.Route;
+import test.fujitsu.videostore.backend.database.DatabaseFactory;
 import test.fujitsu.videostore.backend.domain.Customer;
 import test.fujitsu.videostore.backend.domain.RentOrder;
 import test.fujitsu.videostore.ui.MainLayout;
@@ -70,7 +71,7 @@ public class OrderList extends HorizontalLayout implements HasUrlParameter<Strin
         filter.setValueChangeMode(ValueChangeMode.EAGER);
         filter.addValueChangeListener(event -> {
             if (filter != null) {
-                List<RentOrder> rentOrderList = viewLogic.repository.getAll();
+                List<RentOrder> rentOrderList = DatabaseFactory.getOrderList();
                 List<RentOrder> temp = new ArrayList<>();
                 for (RentOrder r : rentOrderList) {
                     if (filter.getValue().equals(String.valueOf(r.getId()))
