@@ -26,12 +26,16 @@ public final class CurrentDatabase {
      *
      * @param databasePath database file path
      */
+
+    //TODO play here
     public static void set(String databasePath) {
-        if (databasePath == null) {
-            getCurrentRequest().getWrappedSession().removeAttribute(CURRENT_DATABASE_ATTRIBUTE_KEY);
-        } else {
-            getCurrentRequest().getWrappedSession().setAttribute(CURRENT_DATABASE_ATTRIBUTE_KEY, DatabaseFactory.from(databasePath));
-        }
+        getCurrentRequest().getWrappedSession().setAttribute(CURRENT_DATABASE_ATTRIBUTE_KEY, DatabaseFactory.from(databasePath));
+
+//        if (databasePath == null) {
+//            getCurrentRequest().getWrappedSession().removeAttribute(CURRENT_DATABASE_ATTRIBUTE_KEY);
+//        } else {
+//            getCurrentRequest().getWrappedSession().setAttribute(CURRENT_DATABASE_ATTRIBUTE_KEY, DatabaseFactory.from(databasePath));
+//        }
     }
 
     private static VaadinRequest getCurrentRequest() {

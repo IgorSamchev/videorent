@@ -16,6 +16,7 @@ import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.renderer.LocalDateRenderer;
 import com.vaadin.flow.data.renderer.TemplateRenderer;
 import com.vaadin.flow.shared.Registration;
+import test.fujitsu.videostore.backend.database.DatabaseFactory;
 import test.fujitsu.videostore.backend.domain.Movie;
 import test.fujitsu.videostore.backend.domain.MovieType;
 import test.fujitsu.videostore.backend.domain.RentOrder;
@@ -52,7 +53,7 @@ public class OrderedVideos extends VerticalLayout implements HasValue<AbstractFi
         movieComboBox.setItemLabelGenerator(Movie::getName);
 
         List<Movie> availableMovies = new ArrayList<>();
-        for (Movie movie : CurrentDatabase.get().getMovieTable().getAll()){
+        for (Movie movie : DatabaseFactory.movieList){
             if (movie.getStockCount() > 1) availableMovies.add(movie);
         }
         movieComboBox.setItems(availableMovies);

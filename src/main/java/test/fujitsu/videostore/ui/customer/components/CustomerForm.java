@@ -9,6 +9,7 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.converter.StringToIntegerConverter;
 import com.vaadin.flow.data.value.ValueChangeMode;
+import test.fujitsu.videostore.backend.database.DatabaseFactory;
 import test.fujitsu.videostore.backend.domain.Customer;
 import test.fujitsu.videostore.ui.customer.CustomerListLogic;
 
@@ -103,7 +104,7 @@ public class CustomerForm extends Div {
     }
 
     private boolean customerNotPresent(){
-        for (Customer customer : viewLogic.customerDBTableRepository.getAll()){
+        for (Customer customer : DatabaseFactory.getCustomerList()){
             if (customer.getName().equals(name.getValue())) return false;
         }
          return true;

@@ -14,6 +14,7 @@ import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.router.OptionalParameter;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
+import test.fujitsu.videostore.backend.database.DatabaseFactory;
 import test.fujitsu.videostore.backend.domain.Movie;
 import test.fujitsu.videostore.ui.MainLayout;
 import test.fujitsu.videostore.ui.inventory.components.MovieForm;
@@ -72,7 +73,7 @@ public class VideoStoreInventory extends HorizontalLayout
         filter.setValueChangeMode(ValueChangeMode.EAGER);
         filter.addValueChangeListener(event -> {
             if (filter != null){
-                List<Movie> movieList = viewLogic.movieDBTableRepository.getAll();
+                List<Movie> movieList = DatabaseFactory.movieList;
                 List<Movie> temp = new ArrayList<>();
                 for (Movie m : movieList){
                     if (m.getName().toLowerCase().contains(filter.getValue().toLowerCase())){

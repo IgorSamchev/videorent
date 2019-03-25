@@ -12,17 +12,42 @@ import test.fujitsu.videostore.backend.domain.RentOrder;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Database Factory.
  * <p>
  */
 public class DatabaseFactory {
+    public static List<Movie> movieList = new ArrayList<>();
+    public static List<Customer> customerList = new ArrayList<>();
     private static int movieMaxID = 0;
     private static int customerMaxID = 0;
     private static int orderMaxID = 0;
+
+    public static List<Movie> getMovieList() {
+        return movieList;
+    }
+
+    public static List<Customer> getCustomerList(){
+        return customerList;
+    }
+
+    public static Movie findMovieById(int id) {
+        return movieList.stream().filter(movie -> movie.getId() == id).findFirst().get();
+    }
+
+    public static Customer findCustomerById(int id) {
+        return customerList.stream().filter(customer -> customer.getId() == id).findFirst().get();
+    }
+
+
+
+
+
+
+
+
 
     /**
      * Creates database "connection"/opens database from path.
@@ -41,7 +66,6 @@ public class DatabaseFactory {
             @Override
             public DBTableRepository<Movie> getMovieTable() {
 
-                final List<Movie> movieList = new ArrayList<>();
 
                 JSONParser parser = new JSONParser();
                 try {
@@ -57,7 +81,7 @@ public class DatabaseFactory {
                         if (movieID > movieMaxID) movieMaxID = movieID;
                         movie.setName(jMovie.get("name").toString());
                         movie.setStockCount(Integer.parseInt(String.valueOf(jMovie.get("stockCount"))));
-                        movieList.add(movie);
+
                         if (String.valueOf(jMovie.get("type")).equals("1")) movie.setType(MovieType.NEW);
                         if (String.valueOf(jMovie.get("type")).equals("2")) movie.setType(MovieType.REGULAR);
                         if (String.valueOf(jMovie.get("type")).equals("3")) movie.setType(MovieType.OLD);
@@ -65,6 +89,14 @@ public class DatabaseFactory {
                         if (Integer.parseInt(String.valueOf(jMovie.get("id"))) > movieMaxID) {
                             movieMaxID = Integer.parseInt(String.valueOf(jMovie.get("id")));
                         }
+                        boolean contains = false;
+                        if (!movieList.isEmpty()){
+                            for (Movie m : movieList){
+                                if (m.getName().equals(movie.getName())) contains = true;
+                            }
+                        }
+                        if (!contains) movieList.add(movie);
+
                     }
                 } catch (IOException | ParseException e) {
                     e.printStackTrace();
@@ -117,7 +149,7 @@ public class DatabaseFactory {
 
             @Override
             public DBTableRepository<Customer> getCustomerTable() {
-                final List<Customer> customerList = new ArrayList<>();
+
 
                 JSONParser parser = new JSONParser();
                 try {
@@ -133,12 +165,20 @@ public class DatabaseFactory {
                         if (customerID > customerMaxID) customerMaxID = customerID;
                         customer.setName(jCustomer.get("name").toString());
                         customer.setPoints(Integer.parseInt(String.valueOf(jCustomer.get("points"))));
-                        customerList.add(customer);
 
                         if (Integer.parseInt(String.valueOf(jCustomer.get("id"))) > customerMaxID) {
                             customerMaxID = Integer.parseInt(String.valueOf(jCustomer.get("id")));
                         }
+                        boolean contains = false;
+                        if (!customerList.isEmpty()){
+                            for (Customer c : customerList){
+                                if (c.getName().equals(customer.getName())) contains = true;
+                            }
+                        }
+                        if (!contains) customerList.add(customer);
+
                     }
+
                 } catch (IOException | ParseException e) {
                     e.printStackTrace();
                 }
@@ -185,7 +225,7 @@ public class DatabaseFactory {
                     }
                 };
             }
-
+        //TODO fix me
             @Override
             public DBTableRepository<RentOrder> getOrderTable() {
                 final List<RentOrder> orderList = new ArrayList<>();
@@ -202,8 +242,8 @@ public class DatabaseFactory {
                         int orderID = Integer.parseInt(String.valueOf(jRentOrder.get("id")));
                         order.setId(orderID);
                         if (orderID > orderMaxID) orderMaxID = orderID;
-                        order.setCustomer(getCustomerTable()
-                                .findById(Integer.parseInt(String.valueOf(jRentOrder.get("customer")))));
+                        order.setCustomer(getCustomerList().stream().filter(customer -> customer.getId()
+                                == (Integer.parseInt(String.valueOf(jRentOrder.get("customer"))))).findFirst().get());
                         LocalDate date = LocalDate.parse(String.valueOf(jRentOrder.get("orderDate")));
                         order.setOrderDate(date);
 
@@ -212,7 +252,8 @@ public class DatabaseFactory {
                         for (Object object : items) {
                             JSONObject jItem = (JSONObject) object;
                             RentOrder.Item item = new RentOrder.Item();
-                            item.setMovie(getMovieTable().findById(Integer.parseInt(String.valueOf(jItem.get("movie")))));
+                            item.setMovie(getMovieList().stream().filter(movie -> movie.getId() == (Integer.parseInt(String.valueOf(jItem.get("movie"))))).findFirst().get());
+
                             int type = Integer.parseInt(String.valueOf(jItem.get("type")));
 
                             if (type == 1) item.setMovieType(MovieType.NEW);

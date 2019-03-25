@@ -13,6 +13,7 @@ import com.vaadin.flow.router.BeforeEvent;
 import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.router.OptionalParameter;
 import com.vaadin.flow.router.Route;
+import test.fujitsu.videostore.backend.database.DatabaseFactory;
 import test.fujitsu.videostore.backend.domain.Customer;
 import test.fujitsu.videostore.ui.MainLayout;
 import test.fujitsu.videostore.ui.customer.components.CustomerForm;
@@ -66,7 +67,7 @@ public class CustomerList extends HorizontalLayout implements HasUrlParameter<St
         filter.setValueChangeMode(ValueChangeMode.EAGER);
         filter.addValueChangeListener(event -> {
             if (filter != null) {
-                List<Customer> customerList = viewLogic.customerDBTableRepository.getAll();
+                List<Customer> customerList = DatabaseFactory.getCustomerList();
                 List<Customer> temp = new ArrayList<>();
                 for (Customer c : customerList) {
                     if (c.getName().toLowerCase().contains(filter.getValue().toLowerCase())){

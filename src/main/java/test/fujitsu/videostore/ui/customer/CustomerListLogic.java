@@ -2,6 +2,7 @@ package test.fujitsu.videostore.ui.customer;
 
 import com.vaadin.flow.component.UI;
 import test.fujitsu.videostore.backend.database.DBTableRepository;
+import test.fujitsu.videostore.backend.database.DatabaseFactory;
 import test.fujitsu.videostore.backend.domain.Customer;
 import test.fujitsu.videostore.ui.database.CurrentDatabase;
 
@@ -23,7 +24,7 @@ public class CustomerListLogic {
         customerDBTableRepository = CurrentDatabase.get().getCustomerTable();
 
         view.setNewCustomerEnabled(true);
-        view.setCustomers(customerDBTableRepository.getAll());
+        view.setCustomers(DatabaseFactory.getCustomerList());
     }
 
     public void cancelCustomer() {
@@ -57,7 +58,8 @@ public class CustomerListLogic {
     }
 
     private Customer findCustomer(int customerId) {
-        return customerDBTableRepository.findById(customerId);
+        return DatabaseFactory.findCustomerById(customerId);
+
     }
 
     public void saveCustomer(Customer customer) {

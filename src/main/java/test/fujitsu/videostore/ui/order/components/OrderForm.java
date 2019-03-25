@@ -10,6 +10,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.binder.BinderValidationStatus;
 import com.vaadin.flow.data.binder.ValidationResult;
+import test.fujitsu.videostore.backend.database.DatabaseFactory;
 import test.fujitsu.videostore.backend.domain.Customer;
 import test.fujitsu.videostore.backend.domain.RentOrder;
 import test.fujitsu.videostore.backend.reciept.PrintableOrderReceipt;
@@ -49,7 +50,7 @@ public class OrderForm extends Div {
         customerComboBox.setId("customer");
         customerComboBox.setWidth("100%");
         customerComboBox.setRequired(true);
-        customerComboBox.setItems(CurrentDatabase.get().getCustomerTable().getAll());
+        customerComboBox.setItems(DatabaseFactory.customerList);
         customerComboBox.setItemLabelGenerator(Customer::getName);
         content.add(customerComboBox);
 

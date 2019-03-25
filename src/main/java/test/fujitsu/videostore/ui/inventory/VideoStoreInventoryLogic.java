@@ -2,6 +2,7 @@ package test.fujitsu.videostore.ui.inventory;
 
 import com.vaadin.flow.component.UI;
 import test.fujitsu.videostore.backend.database.DBTableRepository;
+import test.fujitsu.videostore.backend.database.DatabaseFactory;
 import test.fujitsu.videostore.backend.domain.Movie;
 import test.fujitsu.videostore.ui.database.CurrentDatabase;
 
@@ -23,7 +24,7 @@ public class VideoStoreInventoryLogic {
 
 
         view.setNewMovieEnabled(true);
-        view.setMovies(movieDBTableRepository.getAll());
+        view.setMovies(DatabaseFactory.getMovieList());
     }
 
     public void cancelMovie() {
@@ -61,7 +62,7 @@ public class VideoStoreInventoryLogic {
     }
 
     private Movie findMovie(int movieId) {
-        return movieDBTableRepository.findById(movieId);
+        return DatabaseFactory.findMovieById(movieId);
     }
 
     public void saveMovie(Movie movie) {
