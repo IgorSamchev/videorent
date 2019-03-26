@@ -159,16 +159,16 @@ public class OrderForm extends Div {
                     .collect(Collectors.toList());
             if (list.isEmpty()) returnButton.setEnabled(false);
         }
-
         else
             returnButton.setEnabled(true);
 
-
-
-
-        // TODO: Delete button should be disabled during new order creation or if order there is not all movies returned.
-
-        delete.setEnabled(true);
+        if (!isNew) {
+            list = currentOrder.getItems().stream()
+                    .filter(item -> Objects.isNull(item.getReturnedDay()))
+                    .collect(Collectors.toList());
+            if (!list.isEmpty()) delete.setEnabled(false);
+            else delete.setEnabled(true);
+        }
     }
 
     public void setSaveButtonCaption(boolean isReadOnly) {
