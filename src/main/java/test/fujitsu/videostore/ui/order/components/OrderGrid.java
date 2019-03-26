@@ -4,6 +4,7 @@ import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.data.renderer.LocalDateRenderer;
 import com.vaadin.flow.data.renderer.TemplateRenderer;
+import test.fujitsu.videostore.backend.database.DatabaseFactory;
 import test.fujitsu.videostore.backend.domain.Customer;
 import test.fujitsu.videostore.backend.domain.RentOrder;
 
@@ -35,10 +36,11 @@ public class OrderGrid extends Grid<RentOrder> {
         final String availabilityTemplate = "<iron-icon icon=\"vaadin:circle\" class-name=\"[[item.statusClass]]\"></iron-icon>";
         addColumn(TemplateRenderer.<RentOrder>of(availabilityTemplate)
                 .withProperty("statusClass", order -> {
-                    // TODO: Implement flagging system using rules below:
+
                     String result = "";
                     int problems = 0;
                     for(RentOrder.Item orderItem : order.getItems()) {
+
 
                         int totalDays = (int) ChronoUnit.DAYS.between(order.getOrderDate(), LocalDate.now());
                         if (totalDays > orderItem.getDays()){

@@ -12,6 +12,8 @@ import com.vaadin.flow.component.textfield.TextFieldVariant;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.converter.StringToIntegerConverter;
 import com.vaadin.flow.data.value.ValueChangeMode;
+import test.fujitsu.videostore.backend.database.Database;
+import test.fujitsu.videostore.backend.database.DatabaseFactory;
 import test.fujitsu.videostore.backend.domain.Movie;
 import test.fujitsu.videostore.backend.domain.MovieType;
 import test.fujitsu.videostore.backend.domain.RentOrder;
@@ -149,8 +151,15 @@ public class MovieForm extends Div {
         currentMovie = movie;
         binder.readBean(movie);
 
+
+        for (RentOrder order : DatabaseFactory.getOrderList()){
+            for (RentOrder.Item item : order.getItems()){
+                if (item.getMovie().getName().equals(movie.getName())) delete.setEnabled(false);
+
+            }
+        }
         delete.setVisible(true);
-        // TODO: Delete movie button should be inactive if it’s new movie creation or it was rented at least one time.
+
 
     }
 

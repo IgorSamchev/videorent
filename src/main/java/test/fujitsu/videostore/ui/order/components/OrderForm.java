@@ -17,9 +17,13 @@ import test.fujitsu.videostore.backend.reciept.PrintableOrderReceipt;
 import test.fujitsu.videostore.ui.database.CurrentDatabase;
 import test.fujitsu.videostore.ui.order.OrderListLogic;
 
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
 public class OrderForm extends Div {
     private VerticalLayout content;
-
+    List<RentOrder.Item> list;
     private ComboBox<Customer> customerComboBox;
     private DatePicker orderDate;
     private OrderedVideos orderedVideos;
@@ -121,6 +125,8 @@ public class OrderForm extends Div {
         returnButton.addClickListener(event -> {
             ReturnMovieWindow returnMovieWindow = new ReturnMovieWindow(currentOrder, orderListLogic.getOrderToReceiptService(), viewLogic.getRepository(), () -> viewLogic.editOrder(currentOrder));
             returnMovieWindow.open();
+            Notification.show(String.valueOf(list.size()));
+
         });
 
         content.add(save, returnButton, delete, cancel);
@@ -147,8 +153,16 @@ public class OrderForm extends Div {
         orderDate.setVisible(!isNew);
         orderDate.setReadOnly(true);
 
-        // TODO: returnButton should be not enabled if all movies were returned from this order
-        returnButton.setEnabled(true);
+        list = currentOrder.getItems().stream()
+                .filter(item -> Objects.isNull(item.getReturnedDay()))
+                .collect(Collectors.toList());
+
+
+        if (list.isEmpty()) returnButton.setEnabled(false);
+        else returnButton.setEnabled(true);
+
+
+
 
         // TODO: Delete button should be disabled during new order creation or if order there is not all movies returned.
         delete.setEnabled(true);

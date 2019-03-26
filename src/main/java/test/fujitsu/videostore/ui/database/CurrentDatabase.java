@@ -27,7 +27,6 @@ public final class CurrentDatabase {
      * @param databasePath database file path
      */
 
-    //TODO play here
     public static void set(String databasePath) {
         getCurrentRequest().getWrappedSession().setAttribute(CURRENT_DATABASE_ATTRIBUTE_KEY, DatabaseFactory.from(databasePath));
 

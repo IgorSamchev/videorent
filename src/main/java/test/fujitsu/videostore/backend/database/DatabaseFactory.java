@@ -217,7 +217,7 @@ public class DatabaseFactory {
                     }
                 };
             }
-        //TODO fix me
+
             @Override
             public DBTableRepository<RentOrder> getOrderTable() {
 
