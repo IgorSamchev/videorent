@@ -14,10 +14,8 @@ import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.router.OptionalParameter;
 import com.vaadin.flow.router.Route;
 import test.fujitsu.videostore.backend.database.DatabaseFactory;
-import test.fujitsu.videostore.backend.domain.Customer;
 import test.fujitsu.videostore.backend.domain.RentOrder;
 import test.fujitsu.videostore.ui.MainLayout;
-import test.fujitsu.videostore.ui.customer.CustomerList;
 import test.fujitsu.videostore.ui.order.components.OrderForm;
 import test.fujitsu.videostore.ui.order.components.OrderGrid;
 
@@ -65,7 +63,7 @@ public class OrderList extends HorizontalLayout implements HasUrlParameter<Strin
         viewLogic.init();
     }
 
-    public HorizontalLayout createTopBar() {
+    private HorizontalLayout createTopBar() {
         filter = new TextField();
         filter.setId("filter");
         filter.setPlaceholder("Filter by ID or Customer name");
@@ -98,47 +96,47 @@ public class OrderList extends HorizontalLayout implements HasUrlParameter<Strin
         return topLayout;
     }
 
-    public void showSaveNotification(String msg) {
+    void showSaveNotification(String msg) {
         Notification.show(msg);
     }
 
-    public void setNewOrderEnabled(boolean enabled) {
-        newOrder.setEnabled(enabled);
+    void setNewOrderEnabled() {
+        newOrder.setEnabled(true);
     }
 
-    public void clearSelection() {
+    void clearSelection() {
         grid.getSelectionModel().deselectAll();
     }
 
-    public void selectRow(RentOrder row) {
+    void selectRow(RentOrder row) {
         grid.getSelectionModel().select(row);
     }
 
-    public void addOrder(RentOrder order) {
+    void addOrder(RentOrder order) {
         order.setOrderDate(LocalDate.now());
         dataProvider.getItems().add(order);
         grid.getDataProvider().refreshAll();
     }
 
-    public void updateOrder(RentOrder order) {
+    void updateOrder(RentOrder order) {
         dataProvider.refreshItem(order);
     }
 
-    public void removeOrder(RentOrder order) {
+    void removeOrder(RentOrder order) {
         dataProvider.getItems().remove(order);
         grid.getDataProvider().refreshAll();
     }
 
-    public void editOrder(RentOrder order) {
+    void editOrder(RentOrder order) {
         showForm(order != null);
         form.editOrder(order);
     }
 
-    public void showForm(boolean show) {
+    void showForm(boolean show) {
         form.setVisible(show);
     }
 
-    public void setOrders(List<RentOrder> orders) {
+    void setOrders(List<RentOrder> orders) {
         dataProvider.getItems().clear();
         dataProvider.getItems().addAll(orders);
         grid.getDataProvider().refreshAll();

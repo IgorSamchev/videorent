@@ -19,10 +19,9 @@ import java.util.*;
  * <p>
  */
 public class DatabaseFactory {
-    public static List<Movie> movieList = new ArrayList<>();
-    public static List<Customer> customerList = new ArrayList<>();
+    private static List<Movie> movieList = new ArrayList<>();
+    private static List<Customer> customerList = new ArrayList<>();
     private static List<RentOrder> orderList = new ArrayList<>();
-
 
     private static int movieMaxID = 0;
     private static int customerMaxID = 0;
@@ -32,7 +31,7 @@ public class DatabaseFactory {
         return movieList;
     }
 
-    public static List<Customer> getCustomerList(){
+    public static List<Customer> getCustomerList() {
         return customerList;
     }
 
@@ -82,8 +81,8 @@ public class DatabaseFactory {
                             movieMaxID = Integer.parseInt(String.valueOf(jMovie.get("id")));
                         }
                         boolean contains = false;
-                        if (!movieList.isEmpty()){
-                            for (Movie m : movieList){
+                        if (!movieList.isEmpty()) {
+                            for (Movie m : movieList) {
                                 if (m.getName().equals(movie.getName())) contains = true;
                             }
                         }
@@ -162,8 +161,8 @@ public class DatabaseFactory {
                             customerMaxID = Integer.parseInt(String.valueOf(jCustomer.get("id")));
                         }
                         boolean contains = false;
-                        if (!customerList.isEmpty()){
-                            for (Customer c : customerList){
+                        if (!customerList.isEmpty()) {
+                            for (Customer c : customerList) {
                                 if (c.getName().equals(customer.getName())) contains = true;
                             }
                         }
@@ -261,8 +260,8 @@ public class DatabaseFactory {
                         order.setItems(orderItems);
 
                         boolean contains = false;
-                        if (!orderList.isEmpty()){
-                            for (RentOrder rentOrder : orderList){
+                        if (!orderList.isEmpty()) {
+                            for (RentOrder rentOrder : orderList) {
                                 if (rentOrder.getId() == order.getId()) contains = true;
                             }
                         }

@@ -19,54 +19,53 @@ public class PrintableOrderReceipt implements PrintableReceipt {
     private BigDecimal totalPrice;
     private int remainingBonusPoints;
 
-    public String getOrderId() {
+    private String getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(String orderId) {
+    void setOrderId(String orderId) {
         this.orderId = orderId;
     }
 
-    public LocalDate getOrderDate() {
+    private LocalDate getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(LocalDate orderDate) {
+    void setOrderDate(LocalDate orderDate) {
         this.orderDate = orderDate;
     }
 
-    public String getCustomerName() {
+    private String getCustomerName() {
         return customerName;
     }
 
-    public void setCustomerName(String customerName) {
+    void setCustomerName(String customerName) {
         this.customerName = customerName;
     }
 
-    public List<Item> getOrderItems() {
+    List<Item> getOrderItems() {
         return orderItems;
     }
 
-    public void setOrderItems(List<Item> orderItems) {
+    void setOrderItems(List<Item> orderItems) {
         this.orderItems = orderItems;
     }
 
-    public BigDecimal getTotalPrice() {
+    private BigDecimal getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(BigDecimal totalPrice) {
+    void setTotalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
     }
 
-    public int getRemainingBonusPoints() {
+    private int getRemainingBonusPoints() {
         return remainingBonusPoints;
     }
 
-    public void setRemainingBonusPoints(int remainingBonusPoints) {
+    void setRemainingBonusPoints(int remainingBonusPoints) {
         this.remainingBonusPoints = remainingBonusPoints;
     }
-
 
 
     public String print() {
@@ -116,19 +115,19 @@ public class PrintableOrderReceipt implements PrintableReceipt {
         private BigDecimal paidMoney = null;
         private Integer paidBonus = null;
 
-        public String getMovieName() {
+        String getMovieName() {
             return movieName;
         }
 
-        public void setMovieName(String movieName) {
+        void setMovieName(String movieName) {
             this.movieName = movieName;
         }
 
-        public MovieType getMovieType() {
+        MovieType getMovieType() {
             return movieType;
         }
 
-        public void setMovieType(MovieType movieType) {
+        void setMovieType(MovieType movieType) {
             this.movieType = movieType;
         }
 
@@ -140,23 +139,23 @@ public class PrintableOrderReceipt implements PrintableReceipt {
             this.days = days;
         }
 
-        public BigDecimal getPaidMoney() {
+        BigDecimal getPaidMoney() {
             return paidMoney;
         }
 
-        public void setPaidMoney(BigDecimal paidMoney) {
+        void setPaidMoney(BigDecimal paidMoney) {
             this.paidMoney = paidMoney;
         }
 
-        public Integer getPaidBonus() {
+        Integer getPaidBonus() {
             return paidBonus;
         }
 
-        public void setPaidBonus(Integer paidBonus) {
+        void setPaidBonus(Integer paidBonus) {
             this.paidBonus = paidBonus;
         }
 
-        public String print() {
+        String print() {
             StringBuilder receipt = new StringBuilder();
             receipt.append(getMovieName())
                     .append(" (")

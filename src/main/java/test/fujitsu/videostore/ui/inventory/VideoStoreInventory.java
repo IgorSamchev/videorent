@@ -66,14 +66,14 @@ public class VideoStoreInventory extends HorizontalLayout
         viewLogic.init();
     }
 
-    public HorizontalLayout createTopBar() {
+    private HorizontalLayout createTopBar() {
         filter = new TextField();
         filter.setId("filter");
         filter.setPlaceholder("Filter by name");
         filter.setValueChangeMode(ValueChangeMode.EAGER);
         filter.addValueChangeListener(event -> {
             if (filter != null){
-                List<Movie> movieList = DatabaseFactory.movieList;
+                List<Movie> movieList = DatabaseFactory.getMovieList();
                 List<Movie> temp = new ArrayList<>();
                 for (Movie m : movieList){
                     if (m.getName().toLowerCase().contains(filter.getValue().toLowerCase())){
@@ -104,46 +104,46 @@ public class VideoStoreInventory extends HorizontalLayout
         return topLayout;
     }
 
-    public void showSaveNotification(String msg) {
+    void showSaveNotification(String msg) {
         Notification.show(msg);
     }
 
-    public void setNewMovieEnabled(boolean enabled) {
-        newMovie.setEnabled(enabled);
+    void setNewMovieEnabled() {
+        newMovie.setEnabled(true);
     }
 
-    public void clearSelection() {
+    void clearSelection() {
         grid.getSelectionModel().deselectAll();
     }
 
-    public void selectRow(Movie row) {
+    void selectRow(Movie row) {
         grid.getSelectionModel().select(row);
     }
 
-    public void addMovie(Movie movie) {
+    void addMovie(Movie movie) {
         dataProvider.getItems().add(movie);
         grid.getDataProvider().refreshAll();
     }
 
-    public void updateMovie(Movie movie) {
+    void updateMovie(Movie movie) {
         dataProvider.refreshItem(movie);
     }
 
-    public void removeMovie(Movie movie) {
+    void removeMovie(Movie movie) {
         dataProvider.getItems().remove(movie);
         dataProvider.refreshAll();
     }
 
-    public void editMovie(Movie movie) {
+    void editMovie(Movie movie) {
         showForm(movie != null);
         form.editMovie(movie);
     }
 
-    public void showForm(boolean show) {
+    void showForm(boolean show) {
         form.setVisible(show);
     }
 
-    public void setMovies(List<Movie> movies) {
+    void setMovies(List<Movie> movies) {
         dataProvider.getItems().clear();
         dataProvider.getItems().addAll(movies);
         dataProvider.refreshAll();

@@ -11,12 +11,12 @@ import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.router.RouterLink;
 
-public class Menu extends FlexLayout {
+class Menu extends FlexLayout {
 
     private static final String SHOW_TABS = "show-tabs";
     private Tabs tabs;
 
-    public Menu() {
+    Menu() {
         setClassName("menu-bar");
 
         final Button showMenu = new Button("Menu", event -> {
@@ -37,8 +37,8 @@ public class Menu extends FlexLayout {
         add(tabs);
     }
 
-    public void addView(Class<? extends Component> viewClass, String caption,
-                        Icon icon) {
+    void addView(Class<? extends Component> viewClass, String caption,
+                 Icon icon) {
         Tab tab = new Tab();
         RouterLink routerLink = new RouterLink(null, viewClass);
         routerLink.setClassName("menu-link");

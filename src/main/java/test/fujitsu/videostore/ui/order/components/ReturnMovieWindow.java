@@ -35,7 +35,7 @@ public class ReturnMovieWindow extends Dialog {
 
     private CloseEvent closeEvent;
 
-    public ReturnMovieWindow(RentOrder currentOrder, OrderToReceiptService orderToReceiptService, DBTableRepository<RentOrder> repository, CloseEvent closeEvent) {
+    ReturnMovieWindow(RentOrder currentOrder, OrderToReceiptService orderToReceiptService, DBTableRepository<RentOrder> repository, CloseEvent closeEvent) {
         this.currentOrder = currentOrder;
         this.orderToReceiptService = orderToReceiptService;
         this.repository = repository;

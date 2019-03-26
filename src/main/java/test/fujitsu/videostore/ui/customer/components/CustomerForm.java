@@ -13,19 +13,13 @@ import test.fujitsu.videostore.backend.database.DatabaseFactory;
 import test.fujitsu.videostore.backend.domain.Customer;
 import test.fujitsu.videostore.ui.customer.CustomerListLogic;
 
-import java.util.List;
-
 /**
  * Customer edit/creation form
  */
 public class CustomerForm extends Div {
 
-    private VerticalLayout content;
-
     private TextField name;
-    private TextField points;
     private Button save;
-    private Button cancel;
     private Button delete;
 
     private CustomerListLogic viewLogic;
@@ -35,7 +29,7 @@ public class CustomerForm extends Div {
     public CustomerForm(CustomerListLogic customerListLogic) {
         setId("edit-form");
 
-        content = new VerticalLayout();
+        VerticalLayout content = new VerticalLayout();
         content.setSizeUndefined();
         add(content);
 
@@ -48,7 +42,7 @@ public class CustomerForm extends Div {
         name.setValueChangeMode(ValueChangeMode.EAGER);
         content.add(name);
 
-        points = new TextField("Bonus points");
+        TextField points = new TextField("Bonus points");
         points.setId("bonus-points");
         points.setWidth("100%");
         points.setRequired(true);
@@ -82,7 +76,7 @@ public class CustomerForm extends Div {
                 showErrorNotification();
         });
 
-        cancel = new Button("Cancel");
+        Button cancel = new Button("Cancel");
         cancel.setWidth("100%");
         cancel.setId("cancel");
         cancel.addClickListener(event -> viewLogic.cancelCustomer());
@@ -103,11 +97,11 @@ public class CustomerForm extends Div {
         content.add(save, delete, cancel);
     }
 
-    private boolean customerNotPresent(){
-        for (Customer customer : DatabaseFactory.getCustomerList()){
+    private boolean customerNotPresent() {
+        for (Customer customer : DatabaseFactory.getCustomerList()) {
             if (customer.getName().equals(name.getValue())) return false;
         }
-         return true;
+        return true;
     }
 
     private void showErrorNotification() {
@@ -119,15 +113,14 @@ public class CustomerForm extends Div {
     }
 
 
-
     public void editCustomer(Customer customer) {
         if (customer == null) {
             customer = new Customer();
         }
         currentCustomer = customer;
         binder.readBean(customer);
-
-        // TODO: Customer deletion button should be inactive if it’s new customer creation or customer have active rent’s. If customer deleted, then all his already inactive rent’s should be deleted also.
-        delete.setEnabled(true);
+        if (currentCustomer.isNewObject()) delete.setEnabled(false);
     }
+
 }
+

@@ -6,22 +6,19 @@ package test.fujitsu.videostore.backend.domain;
  */
 public enum MovieType {
 
-    NEW(1, "New release"),
-    REGULAR(2, "Regular rental"),
-    OLD(3, "Old film");
-
-    /**
-     * Movie type representation in database
-     */
-    private final int databaseId;
+    NEW("New release"),
+    REGULAR("Regular rental"),
+    OLD("Old film");
 
     /**
      * Textural representation in database
      */
     private final String textualRepresentation;
 
-    MovieType(int databaseId, String textualRepresentation) {
-        this.databaseId = databaseId;
+    MovieType(String textualRepresentation) {
+        //
+        //Movie type representation in database
+        //
         this.textualRepresentation = textualRepresentation;
     }
 
@@ -29,7 +26,4 @@ public enum MovieType {
         return textualRepresentation;
     }
 
-    public int getDatabaseId() {
-        return databaseId;
-    }
 }

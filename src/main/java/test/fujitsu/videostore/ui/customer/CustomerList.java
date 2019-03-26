@@ -25,7 +25,7 @@ import java.util.List;
 @Route(value = CustomerList.VIEW_NAME, layout = MainLayout.class)
 public class CustomerList extends HorizontalLayout implements HasUrlParameter<String> {
 
-    public static final String VIEW_NAME = "CustomerList";
+    static final String VIEW_NAME = "CustomerList";
     private CustomerGrid grid;
     private CustomerForm form;
     private TextField filter;
@@ -60,7 +60,7 @@ public class CustomerList extends HorizontalLayout implements HasUrlParameter<St
         viewLogic.init();
     }
 
-    public HorizontalLayout createTopBar() {
+    private HorizontalLayout createTopBar() {
         filter = new TextField();
         filter.setId("filter");
         filter.setPlaceholder("Filter by customer name");
@@ -70,7 +70,7 @@ public class CustomerList extends HorizontalLayout implements HasUrlParameter<St
                 List<Customer> customerList = DatabaseFactory.getCustomerList();
                 List<Customer> temp = new ArrayList<>();
                 for (Customer c : customerList) {
-                    if (c.getName().toLowerCase().contains(filter.getValue().toLowerCase())){
+                    if (c.getName().toLowerCase().contains(filter.getValue().toLowerCase())) {
                         temp.add(c);
                     }
                 }
@@ -94,46 +94,46 @@ public class CustomerList extends HorizontalLayout implements HasUrlParameter<St
         return topLayout;
     }
 
-    public void showSaveNotification(String msg) {
+    void showSaveNotification(String msg) {
         Notification.show(msg);
     }
 
-    public void setNewCustomerEnabled(boolean enabled) {
-        newCustomer.setEnabled(enabled);
+    void setNewCustomerEnabled() {
+        newCustomer.setEnabled(true);
     }
 
-    public void clearSelection() {
+    void clearSelection() {
         grid.getSelectionModel().deselectAll();
     }
 
-    public void selectRow(Customer row) {
+    void selectRow(Customer row) {
         grid.getSelectionModel().select(row);
     }
 
-    public void addCustomer(Customer customer) {
+    void addCustomer(Customer customer) {
         dataProvider.getItems().add(customer);
         grid.getDataProvider().refreshAll();
     }
 
-    public void updateCustomer(Customer customer) {
+    void updateCustomer(Customer customer) {
         dataProvider.refreshItem(customer);
     }
 
-    public void removeCustomer(Customer customer) {
+    void removeCustomer(Customer customer) {
         dataProvider.getItems().remove(customer);
         dataProvider.refreshAll();
     }
 
-    public void editCustomer(Customer customer) {
+    void editCustomer(Customer customer) {
         showForm(customer != null);
         form.editCustomer(customer);
     }
 
-    public void showForm(boolean show) {
+    void showForm(boolean show) {
         form.setVisible(show);
     }
 
-    public void setCustomers(List<Customer> customers) {
+    void setCustomers(List<Customer> customers) {
         dataProvider.getItems().clear();
         dataProvider.getItems().addAll(customers);
         dataProvider.refreshAll();

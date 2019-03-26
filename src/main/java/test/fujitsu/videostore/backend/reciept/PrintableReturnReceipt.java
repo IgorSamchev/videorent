@@ -19,51 +19,47 @@ public class PrintableReturnReceipt implements PrintableReceipt {
     private BigDecimal totalCharge;
     private List<Item> returnedItems;
 
-    public String getOrderId() {
+    private String getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(String orderId) {
+    void setOrderId(String orderId) {
         this.orderId = orderId;
     }
 
-    public String getCustomerName() {
+    private String getCustomerName() {
         return customerName;
     }
 
-    public void setCustomerName(String customerName) {
+    void setCustomerName(String customerName) {
         this.customerName = customerName;
     }
 
-    public LocalDate getRentDate() {
+    private LocalDate getRentDate() {
         return rentDate;
     }
 
-    public void setRentDate(LocalDate rentDate) {
+    void setRentDate(LocalDate rentDate) {
         this.rentDate = rentDate;
     }
 
-    public LocalDate getReturnDate() {
+    private LocalDate getReturnDate() {
         return returnDate;
     }
 
-    public void setReturnDate(LocalDate returnDate) {
+    void setReturnDate(LocalDate returnDate) {
         this.returnDate = returnDate;
     }
 
-    public BigDecimal getTotalCharge() {
+    private BigDecimal getTotalCharge() {
         return totalCharge;
     }
 
-    public void setTotalCharge(BigDecimal totalCharge) {
+    void setTotalCharge(BigDecimal totalCharge) {
         this.totalCharge = totalCharge;
     }
 
-    public List<Item> getReturnedItems() {
-        return returnedItems;
-    }
-
-    public void setReturnedItems(List<Item> returnedItems) {
+    void setReturnedItems(List<Item> returnedItems) {
         this.returnedItems = returnedItems;
     }
 
@@ -91,35 +87,35 @@ public class PrintableReturnReceipt implements PrintableReceipt {
         private int extraDays;
         private BigDecimal extraPrice;
 
-        public String getMovieName() {
+        String getMovieName() {
             return movieName;
         }
 
-        public void setMovieName(String movieName) {
+        void setMovieName(String movieName) {
             this.movieName = movieName;
         }
 
-        public MovieType getMovieType() {
+        MovieType getMovieType() {
             return movieType;
         }
 
-        public void setMovieType(MovieType movieType) {
+        void setMovieType(MovieType movieType) {
             this.movieType = movieType;
         }
 
-        public int getExtraDays() {
+        int getExtraDays() {
             return extraDays;
         }
 
-        public void setExtraDays(int extraDays) {
+        void setExtraDays(int extraDays) {
             this.extraDays = extraDays;
         }
 
-        public BigDecimal getExtraPrice() {
+        BigDecimal getExtraPrice() {
             return extraPrice;
         }
 
-        public void setExtraPrice(BigDecimal extraPrice) {
+        void setExtraPrice(BigDecimal extraPrice) {
             this.extraPrice = extraPrice;
         }
 

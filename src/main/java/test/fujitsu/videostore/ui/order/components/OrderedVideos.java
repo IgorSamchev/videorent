@@ -20,12 +20,10 @@ import test.fujitsu.videostore.backend.database.DatabaseFactory;
 import test.fujitsu.videostore.backend.domain.Movie;
 import test.fujitsu.videostore.backend.domain.MovieType;
 import test.fujitsu.videostore.backend.domain.RentOrder;
-import test.fujitsu.videostore.ui.database.CurrentDatabase;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class OrderedVideos extends VerticalLayout implements HasValue<AbstractField.ComponentValueChangeEvent<OrderedVideos, List<RentOrder.Item>>, List<RentOrder.Item>> {
 
@@ -38,7 +36,7 @@ public class OrderedVideos extends VerticalLayout implements HasValue<AbstractFi
     private Button addButton;
     private Binder<RentOrder.Item> addFormBinder = new Binder<>(RentOrder.Item.class);
 
-    public OrderedVideos() {
+    OrderedVideos() {
         setId("ordered-videos");
 
         setMargin(false);
@@ -53,7 +51,7 @@ public class OrderedVideos extends VerticalLayout implements HasValue<AbstractFi
         movieComboBox.setItemLabelGenerator(Movie::getName);
 
         List<Movie> availableMovies = new ArrayList<>();
-        for (Movie movie : DatabaseFactory.movieList){
+        for (Movie movie : DatabaseFactory.getMovieList()){
             if (movie.getStockCount() > 1) availableMovies.add(movie);
         }
         movieComboBox.setItems(availableMovies);

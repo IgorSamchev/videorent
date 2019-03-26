@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
-public class OrderCalculator {
+class OrderCalculator {
 
     static BigDecimal calculateTotalPrice(PrintableOrderReceipt printableOrderReceipt, RentOrder order) {
         double totalPrice = 0;
@@ -32,7 +32,7 @@ public class OrderCalculator {
     }
 
 
-    public static int calculateOrder(PrintableOrderReceipt.Item item) {
+    static int calculateOrder(PrintableOrderReceipt.Item item) {
         int orderPrice = 0;
         switch (item.getMovieType()) {
             case NEW:
@@ -42,26 +42,26 @@ public class OrderCalculator {
                 orderPrice = 2 * item.getDays();
                 break;
             case OLD:
-                orderPrice = 1 * item.getDays();
+                orderPrice = item.getDays();
                 break;
         }
         return orderPrice;
     }
 
 
-    public static int calculateExtraDays(RentOrder.Item rentedItem, ReturnOrder order) {
+    static int calculateExtraDays(RentOrder.Item rentedItem, ReturnOrder order) {
         int totalDays = (int) ChronoUnit.DAYS.between(order.getRentOrder().getOrderDate(), LocalDate.now());
         return totalDays - rentedItem.getDays();
     }
 
-    public static int calculateExtraDaysPayForEachMovie(RentOrder.Item rentedItem, ReturnOrder order) {
+    static int calculateExtraDaysPayForEachMovie(RentOrder.Item rentedItem, ReturnOrder order) {
         int extraDays = OrderCalculator.calculateExtraDays(rentedItem, order);
         if (rentedItem.getMovieType() == MovieType.NEW) return extraDays * 3;
         if (rentedItem.getMovieType() == MovieType.REGULAR) return extraDays * 2;
         return  extraDays;
     }
 
-    public static int getTotalCharge(ReturnOrder order) {
+    static int getTotalCharge(ReturnOrder order) {
         int totalCharge = 0;
         if (order.getItems() != null) {
 

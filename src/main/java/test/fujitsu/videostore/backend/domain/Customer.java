@@ -1,7 +1,5 @@
 package test.fujitsu.videostore.backend.domain;
 
-import java.util.HashMap;
-
 /**
  * Customer domain object
  */

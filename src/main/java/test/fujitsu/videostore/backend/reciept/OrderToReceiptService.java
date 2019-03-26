@@ -39,7 +39,7 @@ public class OrderToReceiptService {
 
             if (orderItem.isPaidByBonus()) {
                 int bonusPay = OrderCalculator.calculateOrder(item);
-                item.setPaidBonus( bonusPay);
+                item.setPaidBonus(bonusPay);
                 bonusRemaining = (bonusRemaining - bonusPay);
             } else {
                 double orderPrice = OrderCalculator.calculateOrder(item);

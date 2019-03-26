@@ -10,22 +10,22 @@ import test.fujitsu.videostore.ui.database.CurrentDatabase;
 public class OrderListLogic {
 
     private OrderList view;
-    public DBTableRepository<RentOrder> repository;
+    private DBTableRepository<RentOrder> repository;
     private OrderToReceiptService orderToReceiptService;
 
-    public OrderListLogic(OrderList orderList) {
+    OrderListLogic(OrderList orderList) {
         view = orderList;
 
         orderToReceiptService = new OrderToReceiptService();
     }
 
-    public void init() {
+    void init() {
         if (CurrentDatabase.get() == null) {
             return;
         }
 
         repository = CurrentDatabase.get().getOrderTable();
-        view.setNewOrderEnabled(true);
+        view.setNewOrderEnabled();
         view.setOrders(DatabaseFactory.getOrderList());
     }
 
@@ -45,7 +45,7 @@ public class OrderListLogic {
         UI.getCurrent().navigate(OrderList.class, fragmentParameter);
     }
 
-    public void enter(String orderId) {
+    void enter(String orderId) {
         if (orderId != null && !orderId.isEmpty()) {
             if (orderId.equals("new")) {
                 newOrder();
@@ -97,13 +97,13 @@ public class OrderListLogic {
         view.editOrder(order);
     }
 
-    public void newOrder() {
+    void newOrder() {
         view.clearSelection();
         setFragmentParameter("new");
         view.editOrder(new RentOrder());
     }
 
-    public void rowSelected(RentOrder order) {
+    void rowSelected(RentOrder order) {
         if (order == null) {
             return;
         }

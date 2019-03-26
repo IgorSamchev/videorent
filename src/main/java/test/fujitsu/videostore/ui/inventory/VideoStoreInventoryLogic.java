@@ -10,20 +10,20 @@ public class VideoStoreInventoryLogic {
 
     private VideoStoreInventory view;
 
-    public  DBTableRepository<Movie> movieDBTableRepository;
+    private DBTableRepository<Movie> movieDBTableRepository;
 
-    public VideoStoreInventoryLogic(VideoStoreInventory videoStoreInventory) {
+    VideoStoreInventoryLogic(VideoStoreInventory videoStoreInventory) {
         view = videoStoreInventory;
     }
 
-    public void init() {
+    void init() {
         if (CurrentDatabase.get() == null) {
             return;
         }
         movieDBTableRepository = CurrentDatabase.get().getMovieTable();
 
 
-        view.setNewMovieEnabled(true);
+        view.setNewMovieEnabled();
         view.setMovies(DatabaseFactory.getMovieList());
     }
 
@@ -43,7 +43,7 @@ public class VideoStoreInventoryLogic {
         UI.getCurrent().navigate(VideoStoreInventory.class, fragmentParameter);
     }
 
-    public void enter(String movieId) {
+    void enter(String movieId) {
         if (movieId != null && !movieId.isEmpty()) {
             if (movieId.equals("new")) {
                 newMovie();
@@ -96,7 +96,7 @@ public class VideoStoreInventoryLogic {
      *
      * @param movie Movie object
      */
-    public void editMovie(Movie movie) {
+    private void editMovie(Movie movie) {
         if (movie == null) {
             setFragmentParameter("");
         } else {
@@ -105,13 +105,13 @@ public class VideoStoreInventoryLogic {
         view.editMovie(movie);
     }
 
-    public void newMovie() {
+    void newMovie() {
         view.editMovie(new Movie());
         view.clearSelection();
         setFragmentParameter("new");
     }
 
-    public void rowSelected(Movie movie) {
+    void rowSelected(Movie movie) {
         editMovie(movie);
     }
 }

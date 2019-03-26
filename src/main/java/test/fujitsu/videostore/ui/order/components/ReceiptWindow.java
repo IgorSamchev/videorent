@@ -10,9 +10,9 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.dom.Element;
 import com.vaadin.flow.dom.ElementFactory;
 
-public class ReceiptWindow extends Dialog {
+class ReceiptWindow extends Dialog {
 
-    public ReceiptWindow(String orderReceipt, boolean isNew, OrderApprovalListener approvalListener) {
+    ReceiptWindow(String orderReceipt, boolean isNew, OrderApprovalListener approvalListener) {
         setCloseOnEsc(false);
         setCloseOnOutsideClick(false);
         setId("receipt-window");

@@ -15,13 +15,11 @@ import test.fujitsu.videostore.ui.order.OrderList;
 @Theme(value = Lumo.class)
 public class MainLayout extends FlexLayout implements RouterLayout {
 
-    private Menu menu;
-
     public MainLayout() {
         setSizeFull();
         setId("main-layout");
 
-        menu = new Menu();
+        Menu menu = new Menu();
         menu.setId("menu");
         menu.addView(VideoStoreInventory.class, VideoStoreInventory.VIEW_NAME, VaadinIcon.EDIT.create());
         menu.addView(CustomerList.class, "Customer list", VaadinIcon.USER.create());

@@ -13,8 +13,6 @@ import com.vaadin.flow.data.binder.ValidationResult;
 import test.fujitsu.videostore.backend.database.DatabaseFactory;
 import test.fujitsu.videostore.backend.domain.Customer;
 import test.fujitsu.videostore.backend.domain.RentOrder;
-import test.fujitsu.videostore.backend.reciept.PrintableOrderReceipt;
-import test.fujitsu.videostore.ui.database.CurrentDatabase;
 import test.fujitsu.videostore.ui.order.OrderListLogic;
 
 import java.util.List;
@@ -22,14 +20,10 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class OrderForm extends Div {
-    private VerticalLayout content;
-    List<RentOrder.Item> list;
-    private ComboBox<Customer> customerComboBox;
     private DatePicker orderDate;
     private OrderedVideos orderedVideos;
 
     private Button save;
-    private Button cancel;
     private Button delete;
     private Button returnButton;
 
@@ -41,7 +35,7 @@ public class OrderForm extends Div {
         setId("edit-form");
         setSizeFull();
 
-        content = new VerticalLayout();
+        VerticalLayout content = new VerticalLayout();
         content.setId("order-list-form-container");
         content.setSizeUndefined();
         content.setMargin(false);
@@ -50,11 +44,11 @@ public class OrderForm extends Div {
 
         viewLogic = orderListLogic;
 
-        customerComboBox = new ComboBox<>("Customer");
+        ComboBox<Customer> customerComboBox = new ComboBox<>("Customer");
         customerComboBox.setId("customer");
         customerComboBox.setWidth("100%");
         customerComboBox.setRequired(true);
-        customerComboBox.setItems(DatabaseFactory.customerList);
+        customerComboBox.setItems(DatabaseFactory.getCustomerList());
         customerComboBox.setItemLabelGenerator(Customer::getName);
         content.add(customerComboBox);
 
@@ -101,7 +95,7 @@ public class OrderForm extends Div {
 
         });
 
-        cancel = new Button("Cancel");
+        Button cancel = new Button("Cancel");
         cancel.setId("cancel");
         cancel.setWidth("100%");
         cancel.addClickListener(event -> viewLogic.cancelOrder());
@@ -153,6 +147,7 @@ public class OrderForm extends Div {
         orderDate.setVisible(!isNew);
         orderDate.setReadOnly(true);
 
+        List<RentOrder.Item> list;
         if (!isNew) {
             list = currentOrder.getItems().stream()
                     .filter(item -> Objects.isNull(item.getReturnedDay()))
@@ -171,11 +166,8 @@ public class OrderForm extends Div {
         }
     }
 
-    public void setSaveButtonCaption(boolean isReadOnly) {
+    private void setSaveButtonCaption(boolean isReadOnly) {
         save.setText(isReadOnly ? "View receipt" : "Review and Print receipt");
     }
 
-    public RentOrder getCurrentOrder() {
-        return currentOrder;
-    }
 }

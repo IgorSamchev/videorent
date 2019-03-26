@@ -4,7 +4,6 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.OrderedList;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -12,12 +11,10 @@ import com.vaadin.flow.component.textfield.TextFieldVariant;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.converter.StringToIntegerConverter;
 import com.vaadin.flow.data.value.ValueChangeMode;
-import test.fujitsu.videostore.backend.database.Database;
 import test.fujitsu.videostore.backend.database.DatabaseFactory;
 import test.fujitsu.videostore.backend.domain.Movie;
 import test.fujitsu.videostore.backend.domain.MovieType;
 import test.fujitsu.videostore.backend.domain.RentOrder;
-import test.fujitsu.videostore.ui.MovieStoreInitListener;
 import test.fujitsu.videostore.ui.inventory.VideoStoreInventory;
 import test.fujitsu.videostore.ui.inventory.VideoStoreInventoryLogic;
 
@@ -30,23 +27,19 @@ import java.util.Locale;
  */
 public class MovieForm extends Div {
 
-    private VerticalLayout content;
-
     private TextField name;
-    private TextField stockCount;
     private ComboBox<MovieType> type;
     private Button save;
-    private Button cancel;
     private Button delete;
 
-    public VideoStoreInventoryLogic viewLogic;
+    private VideoStoreInventoryLogic viewLogic;
     private Binder<Movie> binder;
     private Movie currentMovie;
 
     public MovieForm(VideoStoreInventoryLogic videoStoreInventoryLogic) {
         setId("edit-form");
 
-        content = new VerticalLayout();
+        VerticalLayout content = new VerticalLayout();
         content.setSizeUndefined();
         add(content);
 
@@ -67,7 +60,7 @@ public class MovieForm extends Div {
         type.setItemLabelGenerator(MovieType::getTextualRepresentation);
         content.add(type);
 
-        stockCount = new TextField("In stock");
+        TextField stockCount = new TextField("In stock");
         stockCount.setId("stock-count");
         stockCount.setWidth("100%");
         stockCount.setRequired(true);
@@ -115,7 +108,7 @@ public class MovieForm extends Div {
             }
         });
 
-        cancel = new Button("Cancel");
+        Button cancel = new Button("Cancel");
         cancel.setId("cancel");
         cancel.setWidth("100%");
         cancel.addClickListener(event -> {
@@ -140,10 +133,6 @@ public class MovieForm extends Div {
         content.add(save, delete, cancel);
     }
 
-    public VideoStoreInventoryLogic getViewLogic() {
-        return viewLogic;
-    }
-
     public void editMovie(Movie movie) {
         if (movie == null) {
             movie = new Movie();
@@ -165,7 +154,7 @@ public class MovieForm extends Div {
 
     private static class StockCountConverter extends StringToIntegerConverter {
 
-        public StockCountConverter() {
+        StockCountConverter() {
             super(0, "Could not convert value to " + Integer.class.getName()
                     + ".");
         }

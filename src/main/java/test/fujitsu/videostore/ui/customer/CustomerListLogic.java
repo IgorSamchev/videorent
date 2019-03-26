@@ -10,20 +10,20 @@ public class CustomerListLogic {
 
     private CustomerList view;
 
-    public DBTableRepository<Customer> customerDBTableRepository;
+    private DBTableRepository<Customer> customerDBTableRepository;
 
-    public CustomerListLogic(CustomerList customerList) {
+    CustomerListLogic(CustomerList customerList) {
         view = customerList;
     }
 
-    public void init() {
+    void init() {
         if (CurrentDatabase.get() == null) {
             return;
         }
 
         customerDBTableRepository = CurrentDatabase.get().getCustomerTable();
 
-        view.setNewCustomerEnabled(true);
+        view.setNewCustomerEnabled();
         view.setCustomers(DatabaseFactory.getCustomerList());
     }
 
@@ -43,7 +43,7 @@ public class CustomerListLogic {
         UI.getCurrent().navigate(CustomerList.class, fragmentParameter);
     }
 
-    public void enter(String customerId) {
+    void enter(String customerId) {
         if (customerId != null && !customerId.isEmpty()) {
             if (customerId.equals("new")) {
                 newCustomer();
@@ -87,7 +87,7 @@ public class CustomerListLogic {
         view.showSaveNotification(customer.getName() + " removed");
     }
 
-    public void editCustomer(Customer customer) {
+    private void editCustomer(Customer customer) {
         if (customer == null) {
             setFragmentParameter("");
         } else {
@@ -96,13 +96,13 @@ public class CustomerListLogic {
         view.editCustomer(customer);
     }
 
-    public void newCustomer() {
+    void newCustomer() {
         setFragmentParameter("new");
         view.clearSelection();
         view.editCustomer(new Customer());
     }
 
-    public void rowSelected(Customer customer) {
+    void rowSelected(Customer customer) {
         editCustomer(customer);
     }
 }
