@@ -39,7 +39,7 @@ public class DatabaseSelectionView extends FlexLayout {
         VerticalLayout verticalLayout = new VerticalLayout();
         verticalLayout.setWidth("310px");
 
-        databasePath = new TextField("Enter database file path");
+        databasePath = new TextField("Enter json file path");
         databasePath.setId("database-path");
         databasePath.setRequired(true);
 
