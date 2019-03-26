@@ -1,12 +1,15 @@
 package test.fujitsu.videostore.backend.domain;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 
 /**
  * One rent by customer
  */
 public class RentOrder {
+
+
 
     /**
      * Rent ID
@@ -53,6 +56,8 @@ public class RentOrder {
     }
 
     public LocalDate getOrderDate() {
+//        if (orderDate == null) return LocalDate.now();
+//        else return orderDate;
         return orderDate;
     }
 

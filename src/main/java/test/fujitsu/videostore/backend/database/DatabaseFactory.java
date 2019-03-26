@@ -21,7 +21,8 @@ import java.util.*;
 public class DatabaseFactory {
     public static List<Movie> movieList = new ArrayList<>();
     public static List<Customer> customerList = new ArrayList<>();
-    public static List<RentOrder> orderList = new ArrayList<>();
+    private static List<RentOrder> orderList = new ArrayList<>();
+
 
     private static int movieMaxID = 0;
     private static int customerMaxID = 0;

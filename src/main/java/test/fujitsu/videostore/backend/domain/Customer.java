@@ -1,9 +1,12 @@
 package test.fujitsu.videostore.backend.domain;
 
+import java.util.HashMap;
+
 /**
  * Customer domain object
  */
 public class Customer {
+
 
     /**
      * Customer ID.

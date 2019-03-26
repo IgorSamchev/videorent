@@ -26,7 +26,7 @@ public class OrderListLogic {
 
         repository = CurrentDatabase.get().getOrderTable();
         view.setNewOrderEnabled(true);
-        view.setOrders(repository.getAll());
+        view.setOrders(DatabaseFactory.getOrderList());
     }
 
     public void cancelOrder() {
@@ -60,8 +60,7 @@ public class OrderListLogic {
     }
 
     private RentOrder findOrder(int orderId) {
-
-        return repository.findById(orderId);
+        return DatabaseFactory.findOrderById(orderId);
     }
 
     public void saveOrder(RentOrder order) {

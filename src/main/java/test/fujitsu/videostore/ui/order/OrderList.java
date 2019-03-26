@@ -21,6 +21,7 @@ import test.fujitsu.videostore.ui.customer.CustomerList;
 import test.fujitsu.videostore.ui.order.components.OrderForm;
 import test.fujitsu.videostore.ui.order.components.OrderGrid;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -114,6 +115,7 @@ public class OrderList extends HorizontalLayout implements HasUrlParameter<Strin
     }
 
     public void addOrder(RentOrder order) {
+        order.setOrderDate(LocalDate.now());
         dataProvider.getItems().add(order);
         grid.getDataProvider().refreshAll();
     }

@@ -116,6 +116,27 @@
           "returnedDay": null
         }
       ]
+    },
+    {
+      "id": 2,
+      "customer": 3,
+      "orderDate": "2019-03-24",
+      "items": [
+        {
+          "movie": 3,
+          "type": 1,
+          "paidByBonus": false,
+          "days": 15,
+          "returnedDay": null
+        },
+        {
+          "movie": 26,
+          "type": 3,
+          "paidByBonus": false,
+          "days": 1,
+          "returnedDay": null
+        }
+      ]
     }
   ]
 }
